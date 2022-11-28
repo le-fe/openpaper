@@ -5,10 +5,15 @@ import {
   ForeignKey,
   CreatedAt,
   UpdatedAt,
+  BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
+import { Media } from '../media/media.model';
 
-@Table
+@Table({
+  tableName: 'Topics',
+})
 export class Topic extends Model<Topic> {
   @Column
   name: string;
@@ -37,4 +42,10 @@ export class Topic extends Model<Topic> {
 
   @UpdatedAt
   updatedAt: Date;
+
+  @BelongsTo(() => User)
+  user: User;
+
+  @HasMany(() => Media)
+  medias: Media[];
 }

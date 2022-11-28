@@ -2,14 +2,16 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
 //
 import { User } from './user/user.model';
 import { UserModule } from './user/user.module';
 
 import { Topic } from './topic/topic.model';
 import { TopicModule } from './topic/topic.module';
+//
+import { Media } from './media/media.model';
 import { MediaModule } from './media/media.module';
-import { ConfigModule } from '@nestjs/config';
 
 ConfigModule.forRoot(); // Load ENV file
 
@@ -22,7 +24,9 @@ ConfigModule.forRoot(); // Load ENV file
       username: 'postgres',
       database: process.env.DATABASE_NAME,
       password: process.env.DATABASE_PWD,
-      models: [User, Topic],
+      models: [User, Topic, Media],
+      autoLoadModels: true,
+      synchronize: true,
     }),
     UserModule,
     TopicModule,

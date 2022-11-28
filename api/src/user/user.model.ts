@@ -1,7 +1,17 @@
-import { Column, Model, Table, HasMany } from 'sequelize-typescript';
+import {
+  Column,
+  Model,
+  Table,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+} from 'sequelize-typescript';
 import { Topic } from '../topic/topic.model';
+import { Media } from '../media/media.model';
 
-@Table
+@Table({
+  tableName: 'Users',
+})
 export class User extends Model<User> {
   @Column
   username: string;
@@ -15,9 +25,21 @@ export class User extends Model<User> {
   @Column
   lastName: string;
 
+  @Column
+  avatar: string;
+
   @Column({ defaultValue: true })
   isActive: boolean;
 
+  @CreatedAt
+  createdAt: Date;
+
+  @UpdatedAt
+  updatedAt: Date;
+
   @HasMany(() => Topic)
   topics: Topic[];
+
+  @HasMany(() => Topic)
+  medias: Media[];
 }
