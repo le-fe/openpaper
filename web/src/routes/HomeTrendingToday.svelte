@@ -1,39 +1,31 @@
-<script>
-	const topics = [
-		{
-			id: 1,
-			name: "Footbal Strikers",
-			featuredImage:
-				"https://external-preview.redd.it/CjpOxxflemIyFJVTXjZBl29SsAooc4_psyDcC56RgZ8.jpg?auto=webp&s=f1b25beb10c3659491f675c85b2756f348a15de9",
-		},
-		{
-			id: 2,
-			name: "Unsolved cases",
-			featuredImage: "https://cdn.historycollection.com/wp-content/uploads/2017/02/keddiemurders_suspects-375x250.jpg",
-		},
-		{
-			id: 3,
-			name: "Strange fishes",
-			featuredImage:
-				"https://media.npr.org/assets/img/2016/06/17/whatafishknows_wide-e2b0800c202b1751ffddfae6394e3c7825e7d333-s1400-c100.jpg",
-		},
-		{
-			id: 4,
-			name: "Hidden island",
-			featuredImage: "http://www.asiaone.com/sites/default/files/inline/images/18363_1498195373.jpg",
-		},
-	]
+<script lang="ts">
+	import { onMount } from "svelte"
+	import { isArray } from "lodash"
+	import { getTrendingTopicList } from "../api/topic"
+	import type { ITopic } from "../interfaces/ITopic"
+	/**
+	 * @type {ITopic[]}
+	 */
+	let topicList: ITopic[] = []
+	onMount(() => fetchTopicList())
+
+	async function fetchTopicList() {
+		const res = await getTrendingTopicList()
+		if (isArray(res)) {
+			topicList = res
+		}
+	}
 </script>
 
 <section>
 	<h2 class="mb-2 font-bold text-lg">Trending Topics</h2>
 	<div class="grid grid-cols-4 gap-4">
-		{#each topics as topic}
+		{#each topicList as topic}
 			<div
-				class="w-full aspect-[4/3] bg-no-repeat bg-cover rounded-lg overflow-hidden card-with-overlay"
+				class="w-full aspect-[5/3] bg-no-repeat bg-cover rounded-lg overflow-hidden card-with-overlay"
 				style="background-image: url('{topic.featuredImage}')"
 			>
-				<div class="inner-content flex flex-col p-4 h-full justify-end">{topic.name}</div>
+				<div class="inner-content flex flex-col p-4 h-full justify-end text-lg">{topic.name}</div>
 			</div>
 		{/each}
 	</div>

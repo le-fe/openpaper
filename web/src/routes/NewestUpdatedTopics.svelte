@@ -1,41 +1,30 @@
-<script>
-	const topics = [
-		{
-			id: 1,
-			name: "Footbal Strikers",
-			description: "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine.",
-			featuredImage:
-				"https://external-preview.redd.it/CjpOxxflemIyFJVTXjZBl29SsAooc4_psyDcC56RgZ8.jpg?auto=webp&s=f1b25beb10c3659491f675c85b2756f348a15de9",
-		},
-		{
-			id: 2,
-			name: "Unsolved cases",
-			description: "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine.",
-			featuredImage: "https://cdn.historycollection.com/wp-content/uploads/2017/02/keddiemurders_suspects-375x250.jpg",
-		},
-		{
-			id: 3,
-			name: "Strange fishes",
-			description: "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine.",
-			featuredImage:
-				"https://media.npr.org/assets/img/2016/06/17/whatafishknows_wide-e2b0800c202b1751ffddfae6394e3c7825e7d333-s1400-c100.jpg",
-		},
-		{
-			id: 4,
-			name: "Hidden island",
-			description: "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine.",
-			featuredImage: "http://www.asiaone.com/sites/default/files/inline/images/18363_1498195373.jpg",
-		},
-	]
+<script lang="ts">
+	import { onMount } from "svelte"
+	import { isArray } from "lodash"
+	import { getTopicList } from "../api/topic"
+	import type { ITopic } from "../interfaces/ITopic"
+	import { Card } from "../components"
+	/**
+	 * @type {ITopic[]}
+	 */
+	let topicList: ITopic[] = []
+	onMount(() => fetchTopicList())
+
+	async function fetchTopicList() {
+		const res = await getTopicList()
+		if (isArray(res)) {
+			topicList = res
+		}
+	}
 </script>
 
 <section>
 	<h2 class="mb-2 font-bold text-lg">Newest updated Topics</h2>
 	<div class="">
-		{#each topics as topic}
-			<div class="p-5 bg-white flex items-center mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col">
+		{#each topicList as topic}
+			<Card class="p-5 bg-white flex items-center mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col">
 				<div class="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center flex-shrink-0">
-					<img src={topic.featuredImage} />
+					<img class="w-full h-full object-cover" src={topic.featuredImage} />
 				</div>
 				<div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
 					<h1 class="text-black text-2xl title-font font-bold mb-2">{topic.name}</h1>
@@ -194,7 +183,7 @@
 						</svg>
 					</a>
 				</div>
-			</div>
+			</Card>
 		{/each}
 	</div>
 </section>

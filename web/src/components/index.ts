@@ -1,5 +1,7 @@
-import CButton from './Button.svelte';
+import Card from './core/Card.svelte';
+import Button from './core/Button.svelte';
 
 export {
-    CButton
+    Button,
+    Card
 }

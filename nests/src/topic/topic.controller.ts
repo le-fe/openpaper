@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { TopicService } from './topic.service';
 import { ITopic } from '../interfaces/Topic';
 
@@ -8,7 +8,14 @@ export class TopicController {
 
     @Get()
     async findAll(): Promise<ITopic[]> {
-        return await this.topicService.findAll();
+        return await this.topicService.findAll({});
+    }
+
+    @Get('/trending')
+    async findTrendings(@Query() query): Promise<ITopic[]> {
+        let queries = {}
+        if (query.limit) queries['limit'] = query.limit
+        return await this.topicService.findAll(queries);
     }
 
     // @Get(:id)

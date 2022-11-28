@@ -1,7 +1,7 @@
 <script>
 	import "../app.postcss"
-	import Header from "./Header.svelte"
-	import Sidebar from "./Sidebar.svelte"
+	import Header from "../components/Header.svelte"
+	import Sidebar from "../components/Sidebar.svelte"
 	import "./styles.css"
 </script>
 
@@ -20,7 +20,7 @@
 
 <style lang="scss">
 	$header-height: 108px;
-	$sidebar-width: 275px;
+	$sidebar-width: 75px;
 	.app {
 		display: flex;
 		flex-direction: column;

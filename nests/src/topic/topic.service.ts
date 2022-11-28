@@ -8,7 +8,7 @@ export class TopicService {
     constructor(@Inject(TOPIC_REPOSITORY) private readonly topicRepository: typeof Topic) { }
     private readonly topics: ITopic[] = [];
 
-    async findAll(): Promise<ITopic[]> {
-        return await this.topicRepository.findAll<Topic>();
+    async findAll(queries: object): Promise<ITopic[]> {
+        return await this.topicRepository.findAll<Topic>({ ...queries });
     }
 }

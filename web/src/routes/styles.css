@@ -32,12 +32,7 @@ p {
 }
 
 a {
-	color: var(--color-theme-1);
 	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
 }
 
 h1 {
@@ -58,15 +53,6 @@ pre {
 	padding: 0.5em;
 	overflow-x: auto;
 	color: var(--color-text);
-}
-
-.text-column {
-	display: flex;
-	max-width: 48rem;
-	flex: 0.6;
-	flex-direction: column;
-	justify-content: center;
-	margin: 0 auto;
 }
 
 input,
