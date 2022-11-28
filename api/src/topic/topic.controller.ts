@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { TopicService } from './topic.service';
-import { ITopic } from '../interfaces/Topic';
+import { ITopic } from '../interfaces/ITopic';
 
 @Controller('topic')
 export class TopicController {

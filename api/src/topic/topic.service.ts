@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ITopic } from '../interfaces/Topic';
+import { ITopic } from '../interfaces/ITopic';
 import { Topic } from './topic.model';
 import { TOPIC_REPOSITORY } from '../database/constants';
 

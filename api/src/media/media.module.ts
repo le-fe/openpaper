@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
+import { mediaProviders } from './media.provider';
+import { MediaService } from './media.service';
 
-@Module({})
-export class MediaModule {}
+@Module({
+  providers: [MediaService, ...mediaProviders]
+})
+export class MediaModule { }
