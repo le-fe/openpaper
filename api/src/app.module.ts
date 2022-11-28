@@ -9,6 +9,9 @@ import { UserModule } from './user/user.module';
 import { Topic } from './topic/topic.model';
 import { TopicModule } from './topic/topic.module';
 import { MediaModule } from './media/media.module';
+import { ConfigModule } from '@nestjs/config';
+
+ConfigModule.forRoot(); // Load ENV file
 
 @Module({
   imports: [
@@ -17,9 +20,8 @@ import { MediaModule } from './media/media.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      // password: process.env.DATABASE_PASSWORD,
-      password: '123123123',
-      database: 'nest3',
+      database: process.env.DATABASE_NAME,
+      password: process.env.DATABASE_PWD,
       models: [User, Topic],
     }),
     UserModule,
