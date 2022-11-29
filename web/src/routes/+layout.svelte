@@ -3,6 +3,7 @@
 	import Header from "../components/Header.svelte"
 	import Sidebar from "../components/Sidebar.svelte"
 	import "./styles.css"
+	import "./tiny-slider.css"
 </script>
 
 <div class="app">

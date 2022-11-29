@@ -31,11 +31,11 @@ module.exports = {
           allowNull: true,
         },
         description: {
-          type: Sequelize.STRING,
+          type: Sequelize.STRING(1025),
           allowNull: true,
         },
         featuredImage: {
-          type: Sequelize.STRING,
+          type: Sequelize.STRING(755),
           allowNull: true,
         },
         additionalFields: {
