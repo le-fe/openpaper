@@ -1,8 +1,7 @@
-import type { IMedia } from "./IMedia"
-
-export interface ITopic {
+export interface IMedia {
 	name: string
 	types: string
+	content: String
 	description: string
 	featuredImage: string
 	isPrivate: boolean
@@ -10,5 +9,4 @@ export interface ITopic {
 	creatorId: number
 	createdAt: Date
 	updatedAt: Date
-	medias: IMedia[]
 }

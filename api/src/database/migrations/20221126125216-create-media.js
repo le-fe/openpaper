@@ -27,7 +27,7 @@ module.exports = {
           allowNull: true,
         },
         content: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: true,
         },
         description: {
@@ -37,6 +37,11 @@ module.exports = {
         featuredImage: {
           type: Sequelize.STRING,
           allowNull: true,
+        },
+        additionalFields: {
+          type: Sequelize.JSONB,
+          allowNull: true,
+          defaultValue: '',
         },
         isPrivate: {
           type: Sequelize.BOOLEAN,

@@ -30,6 +30,9 @@ export class Media extends Model<Media> {
   @Column
   featuredImage: string;
 
+  @Column
+  additionalFields: string;
+
   @Column({ defaultValue: true })
   isPrivate: boolean;
 

@@ -5,10 +5,12 @@ import { TOPIC_REPOSITORY } from '../database/constants';
 
 @Injectable()
 export class TopicService {
-    constructor(@Inject(TOPIC_REPOSITORY) private readonly topicRepository: typeof Topic) { }
-    private readonly topics: ITopic[] = [];
+  constructor(
+    @Inject(TOPIC_REPOSITORY) private readonly topicRepository: typeof Topic,
+  ) {}
+  private readonly topics: ITopic[] = [];
 
-    async findAll(queries: object): Promise<ITopic[]> {
-        return await this.topicRepository.findAll<Topic>({ ...queries });
-    }
+  async findAll(queries: object): Promise<ITopic[]> {
+    return await this.topicRepository.findAll<Topic>({ ...queries });
+  }
 }

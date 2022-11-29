@@ -13,7 +13,11 @@ export class TopicController {
     return await this.topicService.findAll({
       include: [
         { model: User, attributes: ['id', 'firstName', 'lastName', 'avatar'] },
-        { model: Media, attributes: ['id', 'name', 'types', 'featuredImage'] },
+        {
+          model: Media,
+          attributes: ['id', 'name', 'types', 'featuredImage'],
+          limit: 10,
+        },
       ],
     });
   }
