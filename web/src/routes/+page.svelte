@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>OpenPaper | Homepage</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 

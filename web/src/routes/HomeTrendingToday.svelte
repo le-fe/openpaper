@@ -19,13 +19,15 @@
 
 <section>
 	<h2 class="mb-2 font-bold text-lg">Trending Topics</h2>
-	<div class="grid grid-cols-4 gap-4">
+	<div class="grid grid-cols-6 gap-4">
 		{#each topicList as topic}
 			<div
-				class="w-full aspect-[5/3] bg-no-repeat bg-cover rounded-lg overflow-hidden card-with-overlay"
+				class="w-full aspect-[5/2] bg-no-repeat bg-cover rounded-lg overflow-hidden card-with-overlay"
 				style="background-image: url('{topic.featuredImage}')"
 			>
-				<div class="inner-content flex flex-col p-4 h-full justify-end text-lg">{topic.name}</div>
+				<div class="inner-content flex flex-col p-4 h-full justify-end text-lg">
+					<div class="truncate">{topic.name}</div>
+				</div>
 			</div>
 		{/each}
 	</div>
