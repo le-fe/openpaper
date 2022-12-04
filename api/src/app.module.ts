@@ -15,6 +15,9 @@ import { MediaModule } from './media/media.module';
 //
 import { Type } from './type/type.model';
 import { TypeModule } from './type/type.module';
+//
+import { Country } from './country/country.model';
+import { CountryModule } from './country/country.module';
 
 ConfigModule.forRoot(); // Load ENV file
 
@@ -27,7 +30,7 @@ ConfigModule.forRoot(); // Load ENV file
       username: 'postgres',
       database: process.env.DATABASE_NAME,
       password: process.env.DATABASE_PWD,
-      models: [User, Topic, Media, Type],
+      models: [User, Topic, Media, Type, Country],
       autoLoadModels: true,
       synchronize: true,
     }),
@@ -35,6 +38,7 @@ ConfigModule.forRoot(); // Load ENV file
     TopicModule,
     MediaModule,
     TypeModule,
+    CountryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
