@@ -25,6 +25,11 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      numberOfTopics: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
+      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

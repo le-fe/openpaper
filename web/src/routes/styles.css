@@ -12,6 +12,7 @@
 	--color-text: rgba(0, 0, 0, 0.7);
 	--column-width: 42rem;
 	--column-margin-top: 4rem;
+	--header-height: 108px;
 	font-family: var(--font-body);
 	color: var(--color-text);
 }
@@ -33,6 +34,7 @@ p {
 
 a {
 	text-decoration: none;
+	cursor: pointer;
 }
 
 h1 {
@@ -62,6 +64,11 @@ button {
 
 button:focus:not(:focus-visible) {
 	outline: none;
+}
+
+.container {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 @media (min-width: 720px) {

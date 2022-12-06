@@ -27,7 +27,7 @@ module.exports = {
         defaultValue: true,
       },
       numberOfTopics: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: 0,
       },

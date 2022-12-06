@@ -13,4 +13,7 @@ export class Country extends Model<Country> {
 
   @Column
   flag: string;
+
+  @Column
+  numberOfTopics: number;
 }

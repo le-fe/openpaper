@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from "svelte"
 	import "../app.postcss"
 	import Header from "../components/Header.svelte"
 	import Sidebar from "../components/Sidebar.svelte"
@@ -7,27 +8,26 @@
 </script>
 
 <div class="app">
-	<div class="main-header">
+	<div class="main-header bg-white dark:bg-gray-800 dark:text-white">
 		<Header />
 	</div>
-	<div class="sidebar">
+	<div class="sidebar bg-white dark:bg-gray-800 dark:text-white">
 		<Sidebar />
 	</div>
 
-	<main class="app-main">
+	<main class="app-main bg-white dark:bg-gray-600 dark:text-white">
 		<slot />
 	</main>
 </div>
 
 <style lang="scss">
-	$header-height: 108px;
 	$sidebar-width: 75px;
 	.app {
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
 		.main-header {
-			height: $header-height;
+			height: var(--header-height);
 			position: fixed;
 			top: 0;
 			left: 0;
@@ -36,8 +36,7 @@
 		}
 		.sidebar {
 			width: $sidebar-width;
-			margin-top: $header-height;
-			background-color: #f9fafb;
+			margin-top: var(--header-height);
 			-webkit-transition: all 300ms 0s ease-in-out;
 			transition: all 300ms 0s ease-in-out;
 			position: fixed;
@@ -47,14 +46,14 @@
 			z-index: 11;
 			padding-bottom: 30px;
 			overflow: hidden;
-			border-right-width: 1px;
 		}
 	}
 
 	@media (min-width: 1200px) {
 		main {
-			margin-top: $header-height;
+			margin-top: var(--header-height);
 			margin-left: $sidebar-width;
+			min-height: calc(100vh - var(--header-height));
 		}
 	}
 	footer {
