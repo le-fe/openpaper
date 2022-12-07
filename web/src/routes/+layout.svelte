@@ -1,10 +1,21 @@
 <script>
-	import { onMount } from "svelte"
-	import "../app.postcss"
 	import Header from "../components/Header.svelte"
 	import Sidebar from "../components/Sidebar.svelte"
+	import { browser } from "$app/environment"
+	import "$lib/i18n"
+	import { locale, waitLocale } from "svelte-i18n"
+	import { onMount } from "svelte"
+
+	import "../app.postcss"
 	import "./styles.css"
 	import "./tiny-slider.css"
+
+	onMount(async () => {
+		if (browser) {
+			locale.set(window.navigator.language)
+		}
+		await waitLocale()
+	})
 </script>
 
 <div class="app">

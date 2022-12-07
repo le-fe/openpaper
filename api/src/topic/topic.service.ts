@@ -13,4 +13,8 @@ export class TopicService {
   async findAll(queries: object): Promise<ITopic[]> {
     return await this.topicRepository.findAll<Topic>({ ...queries });
   }
+
+  async findOne(id: number): Promise<ITopic> {
+    return await this.topicRepository.findOne<Topic>({ where: { id } });
+  }
 }

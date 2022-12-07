@@ -5,14 +5,15 @@ import { MEDIA_REPOSITORY } from '../database/constants';
 
 @Injectable()
 export class MediaService {
-    constructor(@Inject(MEDIA_REPOSITORY) private readonly mediaRepository: typeof Media) { }
-    private readonly topics: IMedia[] = [];
+  constructor(
+    @Inject(MEDIA_REPOSITORY) private readonly mediaRepository: typeof Media,
+  ) {}
 
-    async findAll(queries: object): Promise<IMedia[]> {
-        return await this.mediaRepository.findAll<Media>({ ...queries });
-    }
+  async findAll(queries: object): Promise<IMedia[]> {
+    return await this.mediaRepository.findAll<Media>({ ...queries });
+  }
 
-    async findByTopicId(topicId: number): Promise<IMedia[]> {
-        return await this.mediaRepository.findAll<Media>({ where: { topicId } });
-    }
+  async findByTopicId(topicId: number): Promise<IMedia[]> {
+    return await this.mediaRepository.findAll<Media>({ where: { topicId } });
+  }
 }

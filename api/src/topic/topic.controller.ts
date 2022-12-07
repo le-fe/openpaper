@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Param } from '@nestjs/common';
 import { TopicService } from './topic.service';
 import { ITopic } from '../interfaces/ITopic';
 import { User } from '../user/user.model';
@@ -29,8 +29,8 @@ export class TopicController {
     return await this.topicService.findAll(queries);
   }
 
-  // @Get(:id)
-  // findOne(@Param('id') id: number): string {
-  //     return 'This action returns one post';
-  // }
+  @Get(':id')
+  async findOne(@Param('id') id: number): Promise<ITopic> {
+    return await this.topicService.findOne(id);
+  }
 }

@@ -2,6 +2,7 @@
 	import { onMount } from "svelte"
 	import type { ITopic } from "../interfaces/ITopic"
 	import { Card, Button, Tag } from "../components"
+	import { goto } from "$app/navigation"
 
 	export let data: ITopic
 	let element: HTMLElement
@@ -22,6 +23,10 @@
 			})
 		}
 	})
+
+	function routeToPage() {
+		goto(`/topic/${data.id}`)
+	}
 </script>
 
 <Card class="mb-6 py-2">
@@ -47,6 +52,6 @@
 	</div>
 	<div class="py-2 px-6 mt-2">
 		<div class="mb-2">{data.description}</div>
-		<Button>Go to Topic</Button>
+		<Button on:click={routeToPage}>Go to Topic</Button>
 	</div>
 </Card>
