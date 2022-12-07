@@ -46,14 +46,14 @@
 
 				<div class="ml-2 flex">
 					{#if selectedCountry}
-						<a class="flex items-center gap-x-2 py-2 px-4 bg-slate-700 hover:bg-slate-600 transition-colors rounded-md">
+						<a class="flex items-center gap-x-2 py-2 px-4 bg-slate-700 hover:bg-slate-600 transition-colors rounded-md mr-2">
 							<img class="w-6 h-4" src="data:image/png;base64, {selectedCountry.flag}" alt={selectedCountry.name} />
 							<span class="text-sm font-medium">{selectedCountry.name}</span>
 						</a>
 					{/if}
 					<div class="flex cursor-pointer items-center gap-x-1 rounded-md py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-900">
 						<Icon name="add" />
-						<span class="text-sm font-medium">Post a Topic</span>
+						<span class="text-sm font-medium">Submit New Topic</span>
 					</div>
 					<div class="ml-2 flex cursor-pointer items-center gap-x-1 rounded-md border py-2 px-4 hover:bg-gray-100">
 						<span class="text-sm font-medium">Sign in</span>

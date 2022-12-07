@@ -49,9 +49,15 @@
 	<div class="py-6">
 		<div class="container">
 			<!-- LIST OF MEDIAS -->
-			<Card class="p-4" type="stroke">
-				<div class="mb-2">
-					<h1 class="text-3xl text-primary dark:text-primary-dark font-medium">{topic.name}</h1>
+			<Card class="py-4 px-6" type="stroke">
+				<div class="mb-2 flex items-center justify-between">
+					<div>
+						<h1 class="text-3xl text-primary dark:text-primary-dark font-medium">{topic.name}</h1>
+					</div>
+					<div class="flex items-center">
+						<Button icon="add">Add to Topic</Button>
+						<Button class="ml-3" icon="report" />
+					</div>
 				</div>
 				<div class="flex items-center">
 					<div class="flex">
