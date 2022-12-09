@@ -2,10 +2,31 @@
 	import { createEventDispatcher } from "svelte"
 	import Icon from "./Icon/Icon.svelte"
 
-	export let primary: boolean = false
-	export let size: string = "medium"
+	export let type: string = "default"
+	export let size: string = "default"
 	export let icon: string = ""
 	export let circle: boolean = false
+	export let loading: boolean = false
+
+	const mappingTypeClass = {
+		default:
+			"text-white fill-white bg-gray-700 hover:bg-gray-800 focus:ring-4 font-medium text-sm dark:bg-gray-600 dark:hover:bg-gray-800 dark:focus:ring-gray-800 border dark:border-slate-500",
+		primary:
+			"text-black fill-black bg-primary hover:bg-primary-dark focus:ring-4 font-medium text-sm dark:bg-primary-dark dark:hover:bg-primary",
+	}
+
+	const paddingHeightSize = {
+		xl: 1.5,
+		lg: 1.25,
+		default: 2,
+		sm: 1,
+		xs: 0.5,
+	}
+
+	const mappingSizeClass = {
+		default: `px-4 py-${paddingHeightSize.default}`,
+		sm: `px-2 py-${paddingHeightSize.sm}`,
+	}
 
 	const dispatch = createEventDispatcher()
 	/**
@@ -18,16 +39,16 @@
 	$: className = generateClassName()
 
 	function generateClassName() {
-		let cls = ["inline-flex items-center", $$props.class]
+		let cls = ["inline-flex items-center transition-colors", mappingTypeClass[type] || mappingTypeClass.default, $$props.class]
 		if (circle) {
 			cls.push("rounded-full")
 		} else {
 			cls.push("rounded-lg")
 		}
 		if (icon && !$$slots.default) {
-			cls.push("p-2.5")
+			cls.push(`p-${paddingHeightSize[size] || paddingHeightSize.default}`)
 		} else {
-			cls.push("px-5 py-2.5")
+			cls.push(mappingSizeClass[size] || mappingSizeClass.default)
 		}
 		return cls.join(" ")
 	}
@@ -35,13 +56,16 @@
 
 <button
 	type="button"
-	class="c-button text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 font-medium text-sm dark:bg-gray-600 dark:hover:bg-gray-800 focus:outline-none dark:focus:ring-gray-800 {className}"
+	class={["c-button focus:outline-none", className, loading ? "opacity-50 pointer-events-none" : ""].filter(Boolean).join(" ")}
 	on:click={onClick}
 >
-	{#if icon}
+	{#if icon && !loading}
 		<Icon class="c-icon" name={icon} />
 	{/if}
+	{#if loading}
+		<Icon class="c-icon animate-spin-slow" name="loading" />
+	{/if}
 	{#if $$slots.default}
-		<span class={icon ? "ml-1" : ""}><slot /></span>
+		<span class={icon ? "ml-1.5" : ""}><slot /></span>
 	{/if}
 </button>

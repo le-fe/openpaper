@@ -7,6 +7,9 @@ const config = {
 				primary: "#ffe000",
 				"primary-dark": "#ffc800",
 			},
+			animation: {
+				"spin-slow": "spin 3s linear infinite",
+			},
 		},
 	},
 

@@ -7,8 +7,8 @@
 </script>
 
 <svelte:head>
-	<title>OpenPaper | Learn, Share, Fun</title>
-	<meta name="description" content="OpenPaper | Learn, Share, Fun" />
+	<title>SquareMoon | Learn, Share, Fun</title>
+	<meta name="description" content="SquareMoon | Learn, Share, Fun" />
 </svelte:head>
 
 <div class="">

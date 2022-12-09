@@ -1,17 +1,10 @@
 {
+  "save": "Save",
+  "cancel": "Cancel",
   "discussions": "Discussions",
-  "page": {
-    "home": {
-      "title": "Homepage",
-      "nav": "Home"
-    },
-    "about": {
-      "title": "About",
-      "nav": "About"
-    },
-    "contact": {
-      "title": "Contact",
-      "nav": "Contact Us"
-    }
-  }
+  "updateTopic": "Update topic",
+  "loadMore": "Load more",
+  "requestYourUpdate": "Request your Update",
+  "requestHasSubmitted": "Your request has been submitted. Thank you",
+  "newTag": "New tag"
 }

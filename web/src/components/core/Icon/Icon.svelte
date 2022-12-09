@@ -8,7 +8,7 @@
 </script>
 
 {#if displayIcon}
-	<svg class="dark:fill-white{$$props.class ? ` ${$$props.class}` : ''}" {focusable} {width} {height} viewBox={displayIcon.box}>
+	<svg class={$$props.class ? ` ${$$props.class}` : ""} {focusable} {width} {height} viewBox={displayIcon.box}>
 		{@html displayIcon.svg}
 	</svg>
 {/if}

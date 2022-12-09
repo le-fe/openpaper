@@ -5,6 +5,7 @@
 	import "$lib/i18n"
 	import { locale, waitLocale } from "svelte-i18n"
 	import { onMount } from "svelte"
+	import { SvelteToast } from "../components/core/Toast"
 
 	import "../app.postcss"
 	import "./styles.css"
@@ -29,6 +30,13 @@
 	<main class="app-main bg-white dark:bg-gray-600 dark:text-white">
 		<slot />
 	</main>
+	<SvelteToast
+		options={{
+			theme: {
+				"--toastBarHeight": 0,
+			},
+		}}
+	/>
 </div>
 
 <style lang="scss">
