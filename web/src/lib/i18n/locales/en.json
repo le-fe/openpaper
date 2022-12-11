@@ -6,5 +6,7 @@
   "loadMore": "Load more",
   "requestYourUpdate": "Request your Update",
   "requestHasSubmitted": "Your request has been submitted. Thank you",
-  "newTag": "New tag"
+  "newTag": "New tag",
+  "viewRequestUpdateTopic": "View update topic requests",
+  "somethingWentWrong": "Ooops, Something went wrong!"
 }

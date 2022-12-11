@@ -31,6 +31,9 @@ export class User extends Model<User> {
   @Column({ defaultValue: true })
   isActive: boolean;
 
+  @Column
+  permission: string;
+
   @CreatedAt
   createdAt: Date;
 

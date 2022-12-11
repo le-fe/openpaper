@@ -1,19 +1,16 @@
 <script lang="ts">
-	import dayjs from "dayjs"
-	import relativeTime from "dayjs/plugin/relativeTime"
-	import type { ITopic, IMedia } from "@/interfaces"
+	import { onMount } from "svelte"
+	import type { IMedia } from "@/interfaces"
 	import { isArray } from "lodash"
 	import { getTopicById, getMediaFromTopic } from "@/api/topic"
 	import { page } from "$app/stores"
 	import { _ } from "svelte-i18n"
 	import ListOfMedia from "./ListOfMedia.svelte"
-
-	dayjs.extend(relativeTime)
+	import { topicDetail } from "./store"
+	import { Icon } from "@components"
 
 	const topicId = $page.params.id
-	let topic: ITopic = {}
 	let medias: IMedia[] = []
-	let loaded: Boolean = false
 
 	async function fetchTopicDetail() {
 		const res = await getTopicById(topicId)
@@ -21,8 +18,10 @@
 			if (res.types) {
 				res.types = res.types.split(",")
 			}
-			topic = res
-			loaded = true
+			$topicDetail = res
+			return res
+		} else {
+			throw new Error(res)
 		}
 	}
 
@@ -35,21 +34,24 @@
 			medias = res
 		}
 	}
-	fetchTopicDetail()
-	fetchMedias()
+	onMount(() => {
+		fetchMedias()
+	})
 </script>
 
 <svelte:head>
-	<title>{topic.name || ""} | Learn, Share, Fun</title>
-	<meta name="description" content="{topic.name} | Learn, Share, Fun" />
+	<title>{$topicDetail.name || ""} | Learn, Share, Fun</title>
+	<meta name="description" content="{$topicDetail.name} | Learn, Share, Fun" />
 </svelte:head>
 
-{#if topic && loaded}
+{#await fetchTopicDetail()}
+	<div class="w-full flex items-center justify-center py-24">
+		<Icon class="animate-spin" width="40px" height="40px" name="loading" />
+	</div>
+{:then}
 	<div class="py-6">
 		<div class="container">
-			<!-- LIST OF MEDIAS -->
-			<ListOfMedia {topic} {medias} />
-			<!-- LIST OF DISCUSSIONS -->
+			<ListOfMedia {medias} />
 			<div class="p-4 mt-8">
 				<div class="mb-2">
 					<h1 class="text-xl font-medium">{$_("discussions")}</h1>
@@ -57,4 +59,6 @@
 			</div>
 		</div>
 	</div>
-{/if}
+{:catch error}
+	<h3>Error while loading the data</h3>
+{/await}

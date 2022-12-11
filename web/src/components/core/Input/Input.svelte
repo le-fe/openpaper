@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { onMount, createEventDispatcher } from "svelte"
 	import { filterProps } from "../utils"
+	import { getEventsAction } from "../utils"
+	import { current_component } from "svelte/internal"
+	const events = getEventsAction(current_component)
 
 	let elm
 	const dispatch = createEventDispatcher()
@@ -9,6 +12,7 @@
 	export let type: string = "text"
 	export let size: string = "default"
 	export let focused: boolean = false
+	export let escBlur: boolean = false
 	let className: string = ""
 	export { className as class }
 
@@ -57,13 +61,20 @@
 
 	const onInput = (e) => (value = e.target.value)
 
-	function toggleFocused() {
-		focused = !focused
+	function toggleFocus(e) {
+		focused = true
+		document.addEventListener("keydown", onKeyDown)
+		dispatch("focus", e)
+	}
+
+	function toggleBlur(e) {
+		focused = false
+		document.removeEventListener("keydown", onKeyDown)
+		dispatch("blur", e)
 	}
 
 	function handleKeypress(e) {
-		var keyCode = e.code || e.key
-		if (keyCode == "Enter") {
+		if (e.key == "Enter") {
 			// Enter pressed
 			dispatch("enter-pressed")
 			return false
@@ -76,14 +87,24 @@
 			elm?.focus()
 		}
 	})
+
+	function onKeyDown(e) {
+		if (escBlur) {
+			if (e.key == "Escape") {
+				elm?.blur()
+				dispatch("esc-pressed")
+			}
+		}
+	}
 </script>
 
 {#if type === "textarea"}
 	<textarea
+		use:events
 		bind:this={elm}
 		{...props}
-		on:focus={toggleFocused}
-		on:blur={toggleFocused}
+		on:focus={toggleFocus}
+		on:blur={toggleBlur}
 		on:blur
 		on:keypress={handleKeypress}
 		{value}
@@ -95,10 +116,11 @@
 	/>
 {:else}
 	<input
+		use:events
 		bind:this={elm}
 		{...props}
-		on:focus={toggleFocused}
-		on:blur={toggleFocused}
+		on:focus={toggleFocus}
+		on:blur={toggleBlur}
 		on:blur
 		on:keypress={handleKeypress}
 		{value}

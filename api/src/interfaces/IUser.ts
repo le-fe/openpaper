@@ -5,6 +5,7 @@ export interface IUser {
   lastName: string;
   avatar: string;
   isActive: boolean;
+  permission: string;
   createdAt: Date;
   updatedAt: Date;
 }
