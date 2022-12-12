@@ -6,6 +6,8 @@
 	import { locale, waitLocale } from "svelte-i18n"
 	import { onMount } from "svelte"
 	import { SvelteToast } from "../components/core/Toast"
+	import { Modals, closeModal } from "@components"
+	import { fade } from "svelte/transition"
 
 	import "../app.postcss"
 	import "./styles.css"
@@ -37,6 +39,9 @@
 			},
 		}}
 	/>
+	<Modals>
+		<div slot="backdrop" class="backdrop" transition:fade on:click={closeModal} />
+	</Modals>
 	<div class="hidden">
 		<span class="p-2" />
 		<span class="p-3" />
@@ -72,6 +77,15 @@
 			padding-bottom: 30px;
 			overflow: hidden;
 		}
+	}
+
+	.backdrop {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.5);
 	}
 
 	@media (min-width: 1200px) {

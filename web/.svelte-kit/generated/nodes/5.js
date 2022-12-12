@@ -1,3 +1,3 @@
-import * as shared from "../../../src/routes/sverdle/how-to-play/+page.ts";
+import * as shared from "../../../src/routes/topic/[id]/+page.ts";
 export { shared };
-export { default as component } from "../../../src/routes/sverdle/how-to-play/+page.svelte";
+export { default as component } from "../../../src/routes/topic/[id]/+page.svelte";

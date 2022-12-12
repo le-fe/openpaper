@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Request, Param } from '@nestjs/common';
 import { IRequestTopicChange } from '../interfaces/IRequestTopicChange';
 import { TopicRequestChange } from './topic-request-change.model';
 import { TopicRequestChangeService } from './topic-request-change.service';
@@ -8,6 +8,13 @@ export class TopicRequestChangeController {
   constructor(
     private readonly topicRequestChangeService: TopicRequestChangeService,
   ) {}
+
+  @Get('/t/:topicId')
+  async findByTopicId(
+    @Param('topicId') topicId: number,
+  ): Promise<IRequestTopicChange[]> {
+    return await this.topicRequestChangeService.findByTopicId(topicId);
+  }
 
   @Post()
   async create(

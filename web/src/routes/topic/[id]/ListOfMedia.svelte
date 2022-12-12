@@ -2,7 +2,8 @@
 	import dayjs from "dayjs"
 	import { cloneDeep } from "lodash"
 	import relativeTime from "dayjs/plugin/relativeTime"
-	import { Card, Button, Icon, Input, Tag, ToastUtil } from "@components"
+	import { Card, Button, Icon, Input, Tag, ToastUtil, openModal } from "@components"
+	import { fade } from "svelte/transition"
 	import TopicMediaItem from "@/components/TopicMediaItem.svelte"
 	import type { IMedia } from "@/interfaces"
 	import { _ } from "svelte-i18n"
@@ -42,7 +43,6 @@
 	}
 
 	function handleNewTagConfirm() {
-		console.log("handleNewTagConfirm")
 		if (newTagValue.length) {
 			if ($topicDetail.types.indexOf(newTagValue) === -1) {
 				topicDetail.update((item) => {
@@ -85,6 +85,12 @@
 			isLoadingRequestUpdate = false
 		}
 	}
+
+	function viewRequestUpdateTopic() {
+		openModal(() => import("./TopicRequestUpdateModal.svelte"), {
+			topicId: $topicDetail.id,
+		})
+	}
 </script>
 
 <Card class="py-4 px-6" type="stroke">
@@ -107,7 +113,7 @@
 			{:else}
 				<Button icon="edit" on:click={toggleUpdateTopic}>{$_("updateTopic")}</Button>
 				{#if $authUser.permission === "ADMIN"}
-					<Button class="ml-3" icon="view">{$_("viewRequestUpdateTopic")}</Button>
+					<Button class="ml-3" icon="view" on:click={viewRequestUpdateTopic}>{$_("viewRequestUpdateTopic")}</Button>
 				{/if}
 				<Button class="ml-3" icon="report" />
 			{/if}

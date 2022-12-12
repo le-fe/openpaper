@@ -8,6 +8,7 @@
 	import ListOfMedia from "./ListOfMedia.svelte"
 	import { topicDetail } from "./store"
 	import { Icon } from "@components"
+	import { error } from "@sveltejs/kit"
 
 	const topicId = $page.params.id
 	let medias: IMedia[] = []
@@ -34,6 +35,11 @@
 			medias = res
 		}
 	}
+
+	async function fetchDiscussions() {
+		return []
+	}
+
 	onMount(() => {
 		fetchMedias()
 	})
@@ -55,6 +61,15 @@
 			<div class="p-4 mt-8">
 				<div class="mb-2">
 					<h1 class="text-xl font-medium">{$_("discussions")}</h1>
+					{#await fetchDiscussions() then items}
+						{#if !items.length}
+							<span class="text-sm">{$_("noDiscussionOnTopicNow")}</span>
+						{:else}
+							{JSON.stringify(items)}
+						{/if}
+					{:catch error}
+						<h3>Error while loading the data</h3>
+					{/await}
 				</div>
 			</div>
 		</div>

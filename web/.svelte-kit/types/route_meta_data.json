@@ -13,5 +13,6 @@
 	],
 	"/topic/[id]": [
 		"src/routes/topic/[id]/+page.ts"
-	]
+	],
+	"/topic": []
 }

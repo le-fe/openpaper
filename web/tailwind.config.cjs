@@ -10,6 +10,10 @@ const config = {
 			animation: {
 				"spin-slow": "spin 3s linear infinite",
 			},
+			minWidth: {
+				"25vw": "25vw",
+				"50vw": "50vw",
+			},
 		},
 	},
 

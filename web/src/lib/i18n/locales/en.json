@@ -8,5 +8,8 @@
   "requestHasSubmitted": "Your request has been submitted. Thank you",
   "newTag": "New tag",
   "viewRequestUpdateTopic": "View update topic requests",
+  "requestTopicUpdates": "Topic update Requests",
+  "someRequestsToChangeTopic": "Some requests to change topic content",
+  "noDiscussionOnTopicNow": "There is no discussion on this topic right now!",
   "somethingWentWrong": "Ooops, Something went wrong!"
 }

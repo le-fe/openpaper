@@ -15,4 +15,10 @@ export class TopicRequestChangeService {
       requestTopic,
     );
   }
+
+  async findByTopicId(topicId: number): Promise<TopicRequestChange[]> {
+    return this.topicRequestChangeRepository.findAll<TopicRequestChange>({
+      where: { topicId: Number(topicId) },
+    });
+  }
 }
