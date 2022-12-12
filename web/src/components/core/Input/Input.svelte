@@ -4,10 +4,12 @@
 	import { getEventsAction } from "../utils"
 	import { current_component } from "svelte/internal"
 	const events = getEventsAction(current_component)
+	import { ClassBuilder } from "../utils"
 
 	let elm
 	const dispatch = createEventDispatcher()
 	export let value: any = null
+	export let disabled: boolean = false
 	export let placeholder: string = "Please input"
 	export let type: string = "text"
 	export let size: string = "default"
@@ -28,7 +30,6 @@
 			"prepend",
 			"persistentHint",
 			"textarea",
-			"rows",
 			"select",
 			"autocomplete",
 			"noUnderline",
@@ -49,15 +50,15 @@
 		sm: "py-0.25 px-1.5 text-sm",
 	}
 
-	$: classList = generateClass()
-	function generateClass() {
-		let cls = [
-			"form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white dark:text-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 dark:border-gray-600 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary-dark dark:focus:bg-slate-900 focus:outline-none",
-			mappingSizeClass[size] || mappingSizeClass.default.default,
-			className,
-		]
-		return cls.join(" ")
-	}
+	const classesDefault =
+		"block w-full px-3 py-1.5 font-normal text-gray-700 bg-white dark:text-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 dark:border-gray-600 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary-dark dark:focus:bg-slate-900 focus:outline-none"
+	const cb = new ClassBuilder("", classesDefault)
+	$: classList = cb
+		.flush()
+		.add(mappingSizeClass[size] || mappingSizeClass.default.default, true)
+		.add(className, true)
+		.add("opacity-25 pointer-events-none", disabled)
+		.get()
 
 	const onInput = (e) => (value = e.target.value)
 

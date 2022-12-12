@@ -28,7 +28,7 @@
 	}
 </script>
 
-<span class="flex items-center rounded {wrapperClass}">
+<span class="flex items-center justify-center rounded {wrapperClass}">
 	<span class="text-xs font-semibold inline-block uppercase last:mr-0 mr-1">
 		<slot />
 	</span>

@@ -2,29 +2,15 @@
 	import { onMount } from "svelte"
 	import type { IMedia } from "@/interfaces"
 	import { isArray } from "lodash"
-	import { getTopicById, getMediaFromTopic } from "@/api/topic"
+	import { getMediaFromTopic } from "@/api/topic"
 	import { page } from "$app/stores"
 	import { _ } from "svelte-i18n"
 	import ListOfMedia from "./ListOfMedia.svelte"
-	import { topicDetail } from "./store"
+	import { topicDetail, fetchTopicDetail } from "./store"
 	import { Icon } from "@components"
-	import { error } from "@sveltejs/kit"
 
 	const topicId = $page.params.id
 	let medias: IMedia[] = []
-
-	async function fetchTopicDetail() {
-		const res = await getTopicById(topicId)
-		if (res) {
-			if (res.types) {
-				res.types = res.types.split(",")
-			}
-			$topicDetail = res
-			return res
-		} else {
-			throw new Error(res)
-		}
-	}
 
 	async function fetchMedias() {
 		const res = await getMediaFromTopic({ topicId, limit: 18 })
@@ -50,7 +36,7 @@
 	<meta name="description" content="{$topicDetail.name} | Learn, Share, Fun" />
 </svelte:head>
 
-{#await fetchTopicDetail()}
+{#await fetchTopicDetail(topicId)}
 	<div class="w-full flex items-center justify-center py-24">
 		<Icon class="animate-spin" width="40px" height="40px" name="loading" />
 	</div>

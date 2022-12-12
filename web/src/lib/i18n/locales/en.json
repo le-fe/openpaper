@@ -11,5 +11,8 @@
   "requestTopicUpdates": "Topic update Requests",
   "someRequestsToChangeTopic": "Some requests to change topic content",
   "noDiscussionOnTopicNow": "There is no discussion on this topic right now!",
-  "somethingWentWrong": "Ooops, Something went wrong!"
+  "thisRequestHasBeenApproved": "This request has been approved!",
+  "thisRequestHasBeenRejected": "This request has been rejected!",
+  "somethingWentWrong": "Ooops, Something went wrong!",
+  "noTopicRequestChangeNow": "We don't have any topic request change now"
 }

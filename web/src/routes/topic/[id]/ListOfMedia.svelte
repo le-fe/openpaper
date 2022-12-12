@@ -1,13 +1,11 @@
 <script lang="ts">
 	import dayjs from "dayjs"
-	import { cloneDeep } from "lodash"
 	import relativeTime from "dayjs/plugin/relativeTime"
 	import { Card, Button, Icon, Input, Tag, ToastUtil, openModal } from "@components"
-	import { fade } from "svelte/transition"
 	import TopicMediaItem from "@/components/TopicMediaItem.svelte"
 	import type { IMedia } from "@/interfaces"
 	import { _ } from "svelte-i18n"
-	import { topicDetail, topicRequestChange } from "./store"
+	import { topicDetail } from "./store"
 	import { authUser } from "@/stores"
 	import { createTopicRequestChange } from "@/api/topic-request-change"
 	dayjs.extend(relativeTime)
@@ -17,61 +15,91 @@
 
 	export let medias: IMedia[]
 
+	// Edit status properties
+	let isEditName: boolean = false
+	let isEditDesc: boolean = false
 	let isEdit: boolean = false
-	let isLoadingRequestUpdate: boolean = false
-	let isUpdatingTag: boolean = false
-	let newTagValue: string = ""
+	//
+	let loadingRequestName: boolean = false
+	let loadingRequestDesc: boolean = false
+	let loadingRequestTag: boolean = false
+	// Edit value properties
+	let requestNameValue: string = ""
+	let requestDescValue: string = ""
+	let requestNewTagValue: string = ""
 
-	function toggleUpdateTopic() {
-		const newValue = !isEdit
-		topicRequestChange.update(() => {
-			let data = cloneDeep($topicDetail)
-			return {
-				creatorId: 1,
-				name: data.name,
-				topicId: data.id,
-				types: data.types,
-				description: data.description,
-				featuredImage: data.featuredImage,
-			}
+	let isUpdatingTag: boolean = false
+
+	const handleClickRequestName = () => {
+		requestNameValue = $topicDetail.name
+		isEditName = true
+	}
+
+	const requestNameChange = async () => {
+		loadingRequestName = true
+		await requestChangeTopic({ key: "name", content: requestNameValue, requestType: "update" })
+		loadingRequestName = false
+		isEditName = false
+	}
+
+	const requestAddTag = async () => {
+		loadingRequestTag = true
+		await requestChangeTopic({
+			key: "types",
+			content: requestNewTagValue,
+			oldContent: $topicDetail.types.join(","),
+			requestType: "add",
 		})
-		isEdit = newValue
+		loadingRequestTag = false
+		handleNewTagCancel()
+	}
+
+	const handleClickRequestDesc = () => {
+		requestDescValue = $topicDetail.description
+		isEditDesc = true
+	}
+
+	const requestDescChange = async () => {
+		loadingRequestDesc = true
+		await requestChangeTopic({ key: "description", content: requestDescValue, requestType: "update" })
+		loadingRequestDesc = false
+		isEditDesc = false
 	}
 
 	function toggleAddTag() {
 		isUpdatingTag = !isUpdatingTag
 	}
 
-	function handleNewTagConfirm() {
-		if (newTagValue.length) {
-			if ($topicDetail.types.indexOf(newTagValue) === -1) {
-				topicDetail.update((item) => {
-					item.types = [...item.types, newTagValue]
-					return item
-				})
-				newTagValue = ""
-			} else {
-				// Todo: Highlight existed tag
-			}
-			isUpdatingTag = false
-		} else {
-			isUpdatingTag = false
-		}
+	function handleNewTagCancel() {
+		requestNewTagValue = ""
+		isUpdatingTag = false
 	}
 
-	async function doUpdateTopic() {
+	async function requestChangeTopic({
+		key,
+		oldContent,
+		content,
+		requestType,
+	}: {
+		key: string
+		oldContent?: string
+		content: string
+		requestType: string
+	}) {
 		try {
-			isLoadingRequestUpdate = true
 			await new Promise<void>((resolve) => {
 				setTimeout(() => {
 					resolve()
 				}, 1000)
 			})
-			let payload = $topicRequestChange
-			payload.types = payload.types
-				.map((t: string) => t.trim())
-				.filter(Boolean)
-				.join(",")
+			let payload = {
+				requestType,
+				topicId: $topicDetail.id,
+				requestUserId: 1,
+				key,
+				content,
+				oldContent: oldContent || $topicDetail[key],
+			}
 			const res = await createTopicRequestChange(payload)
 			if (res) {
 				isEdit = false
@@ -81,8 +109,6 @@
 			}
 		} catch (error) {
 			ToastUtil.toastError(error?.toString() || $_("somethingWentWrong"))
-		} finally {
-			isLoadingRequestUpdate = false
 		}
 	}
 
@@ -96,60 +122,84 @@
 <Card class="py-4 px-6" type="stroke">
 	<div class="mb-2 flex items-center justify-between">
 		<div class="flex-1 overflow-hidden pr-12">
-			{#if isEdit}
-				<div class="w-full">
-					<Input required placeholder="Input topic name" bind:value={$topicRequestChange.name} class={titleClass} />
+			{#if isEditName}
+				<div class="w-full flex items-center">
+					<Input
+						required
+						disabled={loadingRequestName}
+						placeholder="Input topic name"
+						bind:value={requestNameValue}
+						class={titleClass}
+						on:enter-pressed={requestNameChange}
+					/>
+					<Button
+						class="ml-4"
+						icon="check"
+						loading={loadingRequestName}
+						disabled={requestNameValue === $topicDetail.name}
+						on:click={requestNameChange}
+					/>
+					<Button class="ml-2" icon="close" loading={loadingRequestName} on:click={() => (isEditName = false)} />
 				</div>
 			{:else}
-				<h1 class={titleClass}>{$topicDetail.name}</h1>
+				<div class="flex items-center">
+					<h1 class={titleClass}>{$topicDetail.name}</h1>
+					<Button class="ml-4" size="sm" icon="edit" on:click={handleClickRequestName} />
+				</div>
 			{/if}
 		</div>
 		<div class="flex items-center">
-			{#if isEdit}
-				<Button type="primary" icon="submit" loading={isLoadingRequestUpdate} on:click={doUpdateTopic}>
-					{$_("requestYourUpdate")}
-				</Button>
-				<Button class="ml-4" on:click={toggleUpdateTopic}>{$_("cancel")}</Button>
-			{:else}
-				<Button icon="edit" on:click={toggleUpdateTopic}>{$_("updateTopic")}</Button>
-				{#if $authUser.permission === "ADMIN"}
-					<Button class="ml-3" icon="view" on:click={viewRequestUpdateTopic}>{$_("viewRequestUpdateTopic")}</Button>
-				{/if}
-				<Button class="ml-3" icon="report" />
+			{#if $authUser.permission === "ADMIN"}
+				<Button class="ml-3" icon="view" on:click={viewRequestUpdateTopic}>{$_("viewRequestUpdateTopic")}</Button>
 			{/if}
+			<Button class="ml-3" icon="report" />
 		</div>
 	</div>
 	<div class="flex items-center my-4">
 		<div class="flex">
 			{#each $topicDetail.types as type}
-				<a class="inline-flex mr-2 mb-1 cursor-pointer"><Tag closable={isEdit}>#{type}</Tag></a>
+				<a class="inline-flex mr-2 cursor-pointer"><Tag closable={isEdit}>#{type}</Tag></a>
 			{/each}
-			{#if isEdit}
-				{#if isUpdatingTag}
-					<form on:submit|preventDefault={handleNewTagConfirm}>
-						<Input focused={true} size="sm" on:blur={handleNewTagConfirm} bind:value={newTagValue} escBlur={true} />
-					</form>
-				{:else}
-					<Button class="capitalize" size="sm" icon="add" on:click={toggleAddTag}>{$_("newTag")}</Button>
-				{/if}
+			{#if isUpdatingTag}
+				<form class="flex items-center" on:submit|preventDefault={requestAddTag}>
+					<Input focused={true} size="sm" bind:value={requestNewTagValue} escBlur={true} />
+					<div class="flex items-center ml-2">
+						<Button class="" size="sm" icon="check" disabled={!requestNewTagValue.length} on:click={requestAddTag} />
+						<Button class="ml-1" size="sm" icon="close" on:click={handleNewTagCancel} />
+					</div>
+				</form>
+			{:else}
+				<Button class="capitalize" size="sm" icon="add" on:click={toggleAddTag} />
 			{/if}
 		</div>
-		{#if !isEdit}
-			<span class="ml-4 flex items-center">
-				<Icon class="dark:fill-white" name="clock" />
-				<span class="text-sm ml-1">Last updated at: {dayjs($topicDetail.updatedAt).fromNow()}</span>
-			</span>
-		{/if}
+		<span class="ml-4 flex items-center">
+			<Icon class="dark:fill-white" name="clock" />
+			<span class="text-sm ml-1">Last updated at: {dayjs($topicDetail.updatedAt).fromNow()}</span>
+		</span>
 	</div>
-	<div class="my-2">
-		{#if isEdit}
-			<div class="w-full">
-				<Input type="textarea" placeholder="Input description" bind:value={$topicDetail.description} class={descriptionClass} />
+	<div class="mt-2 mb-6">
+		{#if isEditDesc}
+			<div class="w-full flex items-center">
+				<Input
+					type="textarea"
+					rows="3"
+					placeholder="Input description"
+					disabled={loadingRequestDesc}
+					bind:value={requestDescValue}
+					class={descriptionClass}
+				/>
+				<div class="flex flex-col ml-2">
+					<Button class="" icon="check" loading={loadingRequestDesc} on:click={requestDescChange} />
+					<Button class="mt-1" icon="close" loading={loadingRequestDesc} on:click={() => (isEditDesc = false)} />
+				</div>
 			</div>
 		{:else}
-			<p>
-				{$topicDetail.description}
-			</p>
+			<div class="flex items-center">
+				<p>
+					{$topicDetail.description}
+				</p>
+				<Button class="ml-4" size="sm" icon="edit" on:click={handleClickRequestDesc} />
+			</div>
 		{/if}
 	</div>
 	<div>

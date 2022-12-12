@@ -19,8 +19,8 @@ import { TypeModule } from './type/type.module';
 import { Country } from './country/country.model';
 import { CountryModule } from './country/country.module';
 //
-import { TopicRequestChange } from './topic-request-change/topic-request-change.model';
-import { TopicRequestChangeModule } from './topic-request-change/topic-request-change.module';
+import { TopicRequestItem } from './topic-request-item/topic-request-item.model';
+import { TopicRequestItemModule } from './topic-request-item/topic-request-item.module';
 
 ConfigModule.forRoot(); // Load ENV file
 
@@ -33,7 +33,7 @@ ConfigModule.forRoot(); // Load ENV file
       username: 'postgres',
       database: process.env.DATABASE_NAME,
       password: process.env.DATABASE_PWD,
-      models: [User, Topic, Media, Type, Country, TopicRequestChange],
+      models: [User, Topic, Media, Type, Country, TopicRequestItem],
       autoLoadModels: true,
       synchronize: true,
     }),
@@ -42,7 +42,7 @@ ConfigModule.forRoot(); // Load ENV file
     MediaModule,
     TypeModule,
     CountryModule,
-    TopicRequestChangeModule,
+    TopicRequestItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],

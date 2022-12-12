@@ -10,7 +10,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     return queryInterface
-      .createTable('TopicRequestChanges', {
+      .createTable('TopicRequestItems', {
         id: {
           type: Sequelize.INTEGER,
           allowNull: false,
@@ -22,28 +22,32 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        name: {
+        requestType: {
           type: Sequelize.STRING,
           allowNull: true,
         },
-        types: {
+        key: {
           type: Sequelize.STRING,
-          allowNull: true,
-        },
-        description: {
-          type: Sequelize.STRING(1025),
-          allowNull: true,
-        },
-        featuredImage: {
-          type: Sequelize.STRING(755),
-          allowNull: true,
-        },
-        creatorId: {
-          type: Sequelize.INTEGER,
           allowNull: false,
         },
-        updatedMedias: {
-          type: Sequelize.JSONB,
+        oldContent: {
+          type: Sequelize.STRING(2000),
+          allowNull: true,
+        },
+        content: {
+          type: Sequelize.STRING(2000),
+          allowNull: true,
+        },
+        requestUserId: {
+          type: Sequelize.STRING(255),
+          allowNull: false,
+        },
+        isApproved: {
+          type: Sequelize.BOOLEAN,
+          allowNull: true,
+        },
+        isRejected: {
+          type: Sequelize.BOOLEAN,
           allowNull: true,
         },
         createdAt: {
@@ -56,7 +60,7 @@ module.exports = {
         },
       })
       .then(() => {
-        queryInterface.addConstraint('TopicRequestChanges', {
+        queryInterface.addConstraint('TopicRequestItems', {
           fields: ['topicId'],
           type: 'foreign key',
           name: 'topics_id_fkey',
@@ -78,6 +82,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    return queryInterface.dropTable('TopicRequestChanges');
+    return queryInterface.dropTable('TopicRequestItems');
   },
 };

@@ -10,7 +10,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
 import { Media } from '../media/media.model';
-import { TopicRequestChange } from '../topic-request-change/topic-request-change.model';
+import { TopicRequestItem } from '../topic-request-item/topic-request-item.model';
 
 @Table({
   tableName: 'Topics',
@@ -50,6 +50,6 @@ export class Topic extends Model<Topic> {
   @HasMany(() => Media)
   medias: Media[];
 
-  @HasMany(() => TopicRequestChange)
-  requestChanges: TopicRequestChange[];
+  @HasMany(() => TopicRequestItem)
+  requestChanges: TopicRequestItem[];
 }
