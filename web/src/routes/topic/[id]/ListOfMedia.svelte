@@ -18,7 +18,6 @@
 	// Edit status properties
 	let isEditName: boolean = false
 	let isEditDesc: boolean = false
-	let isEdit: boolean = false
 	//
 	let loadingRequestName: boolean = false
 	let loadingRequestDesc: boolean = false
@@ -52,6 +51,15 @@
 		})
 		loadingRequestTag = false
 		handleNewTagCancel()
+	}
+
+	const handleRemoveTag = async (type: string) => {
+		await requestChangeTopic({
+			key: "types",
+			content: type,
+			oldContent: $topicDetail.types.join(","),
+			requestType: "remove",
+		})
 	}
 
 	const handleClickRequestDesc = () => {
@@ -117,6 +125,12 @@
 			topicId: $topicDetail.id,
 		})
 	}
+
+	function openRequestMedia() {
+		openModal(() => import("./MediaRequestUpdateModal.svelte"), {
+			topicId: $topicDetail.id,
+		})
+	}
 </script>
 
 <Card class="py-4 px-6" type="stroke">
@@ -158,13 +172,22 @@
 	<div class="flex items-center my-4">
 		<div class="flex">
 			{#each $topicDetail.types as type}
-				<a class="inline-flex mr-2 cursor-pointer"><Tag closable={isEdit}>#{type}</Tag></a>
+				<a class="inline-flex mr-2 cursor-pointer"
+					><Tag closable={true} on:close-tag={() => handleRemoveTag(type)}>#{type}</Tag></a
+				>
 			{/each}
 			{#if isUpdatingTag}
 				<form class="flex items-center" on:submit|preventDefault={requestAddTag}>
 					<Input focused={true} size="sm" bind:value={requestNewTagValue} escBlur={true} />
 					<div class="flex items-center ml-2">
-						<Button class="" size="sm" icon="check" disabled={!requestNewTagValue.length} on:click={requestAddTag} />
+						<Button
+							class=""
+							size="sm"
+							icon="check"
+							disabled={!requestNewTagValue.length || loadingRequestTag}
+							loading={loadingRequestTag}
+							on:click={requestAddTag}
+						/>
 						<Button class="ml-1" size="sm" icon="close" on:click={handleNewTagCancel} />
 					</div>
 				</form>
@@ -207,6 +230,13 @@
 			{#each medias as media}
 				<TopicMediaItem {media} />
 			{/each}
+			<div
+				class="flex flex-col items-center justify-center cursor-pointer p-4 border dark:border-gray-600 dark:hover:bg-slate-600 transition-colors rounded-xl"
+				on:click={openRequestMedia}
+			>
+				<Icon class="dark:fill-white" name="add" />
+				<span class="mt-2">Add new</span>
+			</div>
 		</div>
 		<div class="mt-4 text-center">
 			<Button>{$_("loadMore")}</Button>

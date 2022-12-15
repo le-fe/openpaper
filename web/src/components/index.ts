@@ -6,5 +6,6 @@ import Input from "./core/Input/Input.svelte"
 import InputSearch from "./core/Input/InputSearch.svelte"
 import ToastUtil from "./core/Toast"
 import { ModalWrapper, Modals, openModal, closeModal } from "./core/Modal"
+import { Form, FormItem } from "./core/Form"
 
-export { Button, Card, Tag, Icon, Input, InputSearch, ToastUtil, ModalWrapper, Modals, openModal, closeModal }
+export { Button, Card, Tag, Icon, Input, InputSearch, ToastUtil, ModalWrapper, Modals, openModal, closeModal, Form, FormItem }

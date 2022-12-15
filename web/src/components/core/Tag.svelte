@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte"
 	import Icon from "./Icon/Icon.svelte"
 
+	const dispatch = createEventDispatcher()
 	export let closable: boolean = false
 	export let type: string = "default"
 	export let size: string = "default"
@@ -26,6 +28,8 @@
 		]
 		return cls.join(" ")
 	}
+
+	function handleCloseTag() {}
 </script>
 
 <span class="flex items-center justify-center rounded {wrapperClass}">
@@ -33,7 +37,10 @@
 		<slot />
 	</span>
 	{#if closable}
-		<i class="p-0.5 rounded-full {mappingTypeClass[type]?.icon || mappingTypeClass.default.icon}">
+		<i
+			class="p-0.5 rounded-full {mappingTypeClass[type]?.icon || mappingTypeClass.default.icon}"
+			on:click={() => dispatch("close-tag")}
+		>
 			<Icon width="12px" height="12px" name="close" />
 		</i>
 	{/if}

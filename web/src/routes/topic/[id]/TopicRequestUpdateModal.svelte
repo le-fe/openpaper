@@ -77,7 +77,11 @@
 											<td class="text-center px-2 py-2 border border-gray-800 text-primary">
 												<Tag>{item.requestType || "update"}</Tag>
 											</td>
-											<td class="text-center px-2 py-2 border border-gray-800 line-through">{item.oldContent || ""}</td>
+											<td
+												class="text-center px-2 py-2 border border-gray-800 {item.requestType === 'update' ? 'line-through' : ''}"
+											>
+												{item.oldContent || ""}
+											</td>
 											<td class="text-center px-2 py-2 border border-gray-800">{item.content}</td>
 											<td class="text-center px-2 py-2 border border-gray-800">{formatDateTime(item.createdAt)}</td>
 											<td class="px-2 py-2 border border-gray-800">

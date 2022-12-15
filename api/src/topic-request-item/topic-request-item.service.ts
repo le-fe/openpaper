@@ -4,6 +4,11 @@ import { TOPIC_REQUEST_ITEM_REPOSITORY } from '../database/constants';
 import { TopicRequestItem } from './topic-request-item.model';
 import { Topic } from '../topic/topic.model';
 
+type IRequestTopicBody = {
+  id: number;
+  isApproved: boolean;
+  isRejected: boolean;
+};
 @Injectable()
 export class TopicRequestItemService {
   constructor(
@@ -23,7 +28,7 @@ export class TopicRequestItemService {
     });
   }
 
-  async confirmRequest(requestData) {
+  async confirmRequest(requestData: IRequestTopicBody) {
     if (!requestData.hasOwnProperty('id')) {
       return { succes: false, message: 'Required id' };
     }
@@ -51,7 +56,26 @@ export class TopicRequestItemService {
           message: 'Topic with including in request is not existed',
         };
       }
-      topic.update({ [topicRequest.key]: topicRequest.content });
+      const requestType = topicRequest.dataValues.requestType;
+      if (requestType === 'update') {
+        topic.update({ [topicRequest.key]: topicRequest.content });
+      } else if (requestType === 'add') {
+        topic.update({
+          types: [
+            ...topic.dataValues.types.split(','),
+            topicRequest.dataValues.content,
+          ]
+            .filter(Boolean)
+            .join(','),
+        });
+      } else if (requestType === 'remove') {
+        topic.update({
+          types: topic.dataValues.types
+            .split(',')
+            .filter((t) => t !== '' && t !== topicRequest.dataValues.content)
+            .join(','),
+        });
+      }
       topicRequest.update({ isRejected: false, isApproved: true });
       return { success: true, message: 'Topic request has been approved' };
     } else if (requestData.isRejected) {

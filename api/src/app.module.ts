@@ -36,6 +36,7 @@ ConfigModule.forRoot(); // Load ENV file
       models: [User, Topic, Media, Type, Country, TopicRequestItem],
       autoLoadModels: true,
       synchronize: true,
+      logging: false,
     }),
     UserModule,
     TopicModule,
