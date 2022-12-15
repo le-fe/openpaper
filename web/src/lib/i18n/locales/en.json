@@ -18,5 +18,7 @@
 	"requestNewItemTopic": "Request add new item into Topic",
 	"itemName": "Name of Item",
 	"itemDescription": "Description of Item",
+	"itemFeaturedImage": "Featured Image of Item",
+	"clickToUpload": "Click to upload",
 	"addItemWillCreateAnDiscussion": "If this item has been approved, an discussion will automatically be created"
 }
