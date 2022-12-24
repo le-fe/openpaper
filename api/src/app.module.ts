@@ -21,6 +21,8 @@ import { CountryModule } from './country/country.module';
 //
 import { TopicRequestItem } from './topic-request-item/topic-request-item.model';
 import { TopicRequestItemModule } from './topic-request-item/topic-request-item.module';
+//
+import { FileModule } from './file/file.module';
 
 ConfigModule.forRoot(); // Load ENV file
 
@@ -44,6 +46,7 @@ ConfigModule.forRoot(); // Load ENV file
     TypeModule,
     CountryModule,
     TopicRequestItemModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

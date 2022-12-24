@@ -39,6 +39,9 @@
 		<div class="modal-body">
 			<slot />
 		</div>
+		<div class="flex items-center justify-center mt-4">
+			<slot name="bottom" />
+		</div>
 	</div>
 </div>
 

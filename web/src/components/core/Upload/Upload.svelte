@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte"
 	import { ClassBuilder } from "../utils"
+	import { uploadFile } from "@/api/upload"
+	import { buildImageUrl } from "@/utils"
 	import Icon from "../Icon/Icon.svelte"
 
 	type IFile = {
@@ -7,17 +10,17 @@
 		name: string
 	}
 
+	const dispatch = createEventDispatcher()
 	let fileinput: HTMLElement
 	let fileList: IFile[] = []
 	export let multiple: boolean = false
 
-	const onFileSelected = (e) => {
-		let image = e.target.files[0]
-		let reader = new FileReader()
-		reader.readAsDataURL(image)
-		reader.onload = (e) => {
-			console.clear()
-			console.log(e.target.result)
+	const onFileSelected = async (e) => {
+		let file = e.target.files[0]
+		let data = await uploadFile({ file })
+		if (data) {
+			data.url = buildImageUrl(data.filename)
+			dispatch("upload", data)
 		}
 	}
 
@@ -25,8 +28,6 @@
 	const cb = new ClassBuilder("", classesDefault)
 	$: uploadDisabled = () => {
 		if (!multiple) {
-			console.clear()
-			console.log(fileList.length)
 			if (fileList.length > 0) {
 				return true
 			}

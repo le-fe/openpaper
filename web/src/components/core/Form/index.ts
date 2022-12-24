@@ -1,4 +1,3 @@
-import Form from "./Form.svelte"
-import FormItem from "./FormItem.svelte"
+import FormKit from "./FormKit.svelte"
 
-export { Form, FormItem }
+export { FormKit }

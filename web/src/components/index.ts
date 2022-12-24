@@ -8,7 +8,7 @@ import Image from "./core/Image/Image.svelte"
 import Upload from "./core/Upload/Upload.svelte"
 import ToastUtil from "./core/Toast"
 import { ModalWrapper, Modals, openModal, closeModal } from "./core/Modal"
-import { Form, FormItem } from "./core/Form"
+import { FormKit } from "./core/Form"
 
 export {
 	Button,
@@ -23,7 +23,6 @@ export {
 	Modals,
 	openModal,
 	closeModal,
-	Form,
-	FormItem,
+	FormKit,
 	Upload,
 }
