@@ -1,18 +1,22 @@
 <script lang="ts">
 	import { ClassBuilder } from "../utils"
+	import Message from "./Message.svelte"
 
+	export let name: string = ""
 	export let label: string = ""
+	export let type: string = "text"
 
-	const classesDefault = "flex items-start"
+	const classesDefault = ""
 	const cb = new ClassBuilder("", classesDefault)
 	$: className = cb.flush().add($$props.class).get()
 </script>
 
 <div class={className}>
 	{#if label}
-		<div class="pr-2 mt-1" style="width: 165px">{label}</div>
+		<label for={name}>{label}</label>
 	{/if}
-	<div class="flex-1">
-		<slot />
-	</div>
+	<slot />
+	{#if name}
+		<Message {name} />
+	{/if}
 </div>

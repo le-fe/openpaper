@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, createEventDispatcher } from "svelte"
+	import { onMount, createEventDispatcher, getContext } from "svelte"
 	import { filterProps } from "../utils"
 	import { getEventsAction } from "../utils"
 	import { current_component } from "svelte/internal"
@@ -110,7 +110,6 @@
 		on:keypress={handleKeypress}
 		{value}
 		class={classList}
-		{type}
 		{placeholder}
 		on:input={onInput}
 		spellcheck="false"

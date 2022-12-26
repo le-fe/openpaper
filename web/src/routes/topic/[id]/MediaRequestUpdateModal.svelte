@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Button, FormKit, ModalWrapper, Input, Upload } from "@components"
+	import { Button, Form, FormItem, ModalWrapper, Input, Upload } from "@components"
 	import { _ } from "svelte-i18n"
 	import { isUrlImage } from "@/utils"
-
+	import * as yup from "yup"
 	export let isOpen: boolean = false
 	export let topicId: number
 
@@ -11,8 +11,6 @@
 		description: string
 		featuredImage: string
 	}
-
-	let formKitElement: FormKit
 	let isShowLink: boolean = false
 	let linkValue: string = ""
 	let isLoadingImage: boolean = false
@@ -21,6 +19,11 @@
 		description: "",
 		featuredImage: "",
 	}
+
+	let schema = yup.object().shape({
+		name: yup.string().required().max(30).label("Name"),
+		description: yup.string().required().max(255).label("Description"),
+	})
 
 	async function loadImageByUrl(url: string) {
 		try {
@@ -42,8 +45,22 @@
 		isShowLink = false
 	}
 
-	function handleRequestItem() {
-		formKitElement.touch()
+	let submitted = false
+	let isValid
+
+	function formSubmit() {
+		submitted = true
+		isValid = schema.isValidSync(dataForm)
+		if (isValid) {
+			alert(JSON.stringify(dataForm))
+		}
+		// setTimeout(() => {
+		// 	console.log(values)
+		// 	setSubmitting(false)
+		// 	resetForm({
+		// 		user: { email: "test@user.com" }, // optional
+		// 	})
+		// }, 2000)
 	}
 
 	function handleUploadImage(evt: any) {
@@ -59,21 +76,21 @@
 	<ModalWrapper size="default" title={$_("requestNewItemTopic")}>
 		<div class="text-sm text-center">{$_("addItemWillCreateAnDiscussion")}</div>
 		<div class="px-6 pb-2">
-			<FormKit class="mt-8" type="form" bind:this={formKitElement}>
-				<FormKit type="text" label={$_("itemName")} validation="required">
+			<Form {schema} fields={dataForm} submitHandler={formSubmit} {submitted} class="mt-8">
+				<FormItem label={$_("itemName")} name="name">
 					<Input bind:value={dataForm.name} placeholder="Please enter name of item" />
-				</FormKit>
-				<FormKit type="text" class="mt-4" label={$_("itemDescription")} validation="required">
+				</FormItem>
+				<FormItem class="mt-4" label={$_("itemDescription")} name="description">
 					<Input type="textarea" bind:value={dataForm.description} placeholder="Please enter description of item" />
-				</FormKit>
-				<FormKit class="mt-4" label={$_("itemFeaturedImage")}>
+				</FormItem>
+				<FormItem class="mt-4" label={$_("itemFeaturedImage")}>
 					{#if isShowLink}
 						<div class="inline-flex items-center">
-							<FormKit type="form">
-								<FormKit type="text">
+							<Form>
+								<FormItem type="text">
 									<Input autofocus class="" placeholder="Enter url" bind:value={linkValue} />
-								</FormKit>
-							</FormKit>
+								</FormItem>
+							</Form>
 							<Button class="mx-2" icon="check" loading={isLoadingImage} on:click={() => loadImageByUrl(linkValue)} />
 							<Button icon="close" on:click={handleCloseImageByUrl} />
 						</div>
@@ -90,12 +107,13 @@
 							<img class="max-w-[150px]" alt={dataForm.featuredImage} src={dataForm.featuredImage} />
 						</div>
 					{/if}
-				</FormKit>
-			</FormKit>
+				</FormItem>
+				<button type="submit" on:click|preventDefault={formSubmit}>Sign in</button>
+			</Form>
 		</div>
 		<div slot="bottom" class="flex items-center">
 			<Button class="mr-2">{$_("cancel")}</Button>
-			<Button type="primary" icon="check" on:click={handleRequestItem}>{$_("requestItem")}</Button>
+			<Button type="primary" icon="check" on:click={formSubmit}>{$_("requestItem")}</Button>
 		</div>
 	</ModalWrapper>
 {/if}
