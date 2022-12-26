@@ -7,7 +7,7 @@
 	import { _ } from "svelte-i18n"
 	import { topicDetail } from "./store"
 	import { authUser } from "@/stores"
-	import { createTopicRequestChange } from "@/api/topic-request-change"
+	import { createTopicRequestChange, REQUEST_TOPIC_TYPE } from "@/api/topic-request-change"
 	dayjs.extend(relativeTime)
 
 	const titleClass = "text-3xl !text-primary !dark:text-primary-dark font-medium"
@@ -36,7 +36,7 @@
 
 	const requestNameChange = async () => {
 		loadingRequestName = true
-		await requestChangeTopic({ key: "name", content: requestNameValue, requestType: "update" })
+		await requestChangeTopic({ key: "name", content: requestNameValue, requestType: REQUEST_TOPIC_TYPE.UPDATE })
 		loadingRequestName = false
 		isEditName = false
 	}
@@ -47,7 +47,7 @@
 			key: "types",
 			content: requestNewTagValue,
 			oldContent: $topicDetail.types.join(","),
-			requestType: "add",
+			requestType: REQUEST_TOPIC_TYPE.ADD,
 		})
 		loadingRequestTag = false
 		handleNewTagCancel()
@@ -58,7 +58,7 @@
 			key: "types",
 			content: type,
 			oldContent: $topicDetail.types.join(","),
-			requestType: "remove",
+			requestType: REQUEST_TOPIC_TYPE.REMOVE,
 		})
 	}
 

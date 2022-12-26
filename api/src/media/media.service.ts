@@ -9,6 +9,10 @@ export class MediaService {
     @Inject(MEDIA_REPOSITORY) private readonly mediaRepository: typeof Media,
   ) {}
 
+  async create(data: object): Promise<IMedia> {
+    return await this.mediaRepository.create<Media>(data);
+  }
+
   async findAll(queries: object): Promise<IMedia[]> {
     return await this.mediaRepository.findAll<Media>({ ...queries });
   }

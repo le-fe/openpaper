@@ -15,9 +15,9 @@
 	})
 
 	async function fetchTopicList() {
-		const res = await getTopicList()
-		if (isArray(res)) {
-			topicList = res
+		const { data } = await getTopicList()
+		if (isArray(data)) {
+			topicList = data
 		}
 	}
 </script>

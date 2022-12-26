@@ -10,9 +10,9 @@
 	onMount(() => fetchTopicList())
 
 	async function fetchTopicList() {
-		const res = await getTrendingTopicList()
-		if (isArray(res)) {
-			topicList = res
+		const { data } = await getTrendingTopicList()
+		if (isArray(data)) {
+			topicList = data
 		}
 	}
 </script>

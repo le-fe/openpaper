@@ -7,14 +7,14 @@ export let topicDetail: Writable<ITopic> = writable({})
 export let topicRequestChange: Writable<IRequestTopicChange> = writable({})
 
 export async function fetchTopicDetail(topicId: number) {
-	const res = await getTopicById(topicId)
-	if (res) {
-		if (res.types) {
-			res.types = res.types.split(",")
+	const { data } = await getTopicById(topicId)
+	if (data) {
+		if (data.types) {
+			data.types = data.types.split(",")
 		}
-		topicDetail.set(res)
-		return res
+		topicDetail.set(data)
+		return data
 	} else {
-		throw new Error(res)
+		throw new Error("Error")
 	}
 }

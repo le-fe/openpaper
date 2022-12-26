@@ -12,6 +12,6 @@
 	{#await $schema.validateAt(name, $fields) then result}
 		<p class="valid" />
 	{:catch error}
-		<p class="inline text-sm" style="color:{$color}">{error.errors[0]}</p>
+		<p class="text-sm" style="color:{$color}">{error.errors[0]}</p>
 	{/await}
 {/if}

@@ -13,10 +13,10 @@
 	let isLoadingConfirm: boolean = false
 
 	async function fetchTopicRequestChanges() {
-		let items = await getTopicRequestChanges(topicId)
-		if (Array.isArray(items)) {
-			requestItems = items
-			return items
+		let { data } = await getTopicRequestChanges(topicId)
+		if (Array.isArray(data)) {
+			requestItems = data
+			return data
 		}
 		return []
 	}
@@ -24,7 +24,7 @@
 	async function handleConfirmRequest(id: number, value: string, index: number) {
 		if (value === "accept") {
 			const result = await confirmTopicRequestChange({ id, isApproved: true })
-			if (result.success) {
+			if (result.ok) {
 				ToastUtil.toastSuccess($_("thisRequestHasBeenApproved"))
 				requestItems[index].isApproved = true
 				requestItems[index].isRejected = false
@@ -34,7 +34,7 @@
 			}
 		} else if (value === "reject") {
 			const result = await confirmTopicRequestChange({ id, isRejected: true })
-			if (result.success) {
+			if (result.ok) {
 				ToastUtil.toastSuccess($_("thisRequestHasBeenRejected"))
 				requestItems[index].isApproved = false
 				requestItems[index].isRejected = true

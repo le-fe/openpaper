@@ -1,8 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IRequestTopicItem } from '../interfaces/IRequestTopicItem';
-import { TOPIC_REQUEST_ITEM_REPOSITORY } from '../database/constants';
+import {
+  MEDIA_REPOSITORY,
+  TOPIC_REQUEST_ITEM_REPOSITORY,
+} from '../database/constants';
 import { TopicRequestItem } from './topic-request-item.model';
 import { Topic } from '../topic/topic.model';
+import { Media } from '../media/media.model';
 
 type IRequestTopicBody = {
   id: number;
@@ -14,6 +18,7 @@ export class TopicRequestItemService {
   constructor(
     @Inject(TOPIC_REQUEST_ITEM_REPOSITORY)
     private readonly topicRequestItemRepository: typeof TopicRequestItem,
+    @Inject(MEDIA_REPOSITORY) private readonly mediaRepository: typeof Media,
   ) {}
 
   async create(requestTopic: IRequestTopicItem): Promise<TopicRequestItem> {
@@ -45,6 +50,7 @@ export class TopicRequestItemService {
     if (!topicRequest) {
       return { succes: false, message: 'Topic with request id is not existed' };
     }
+    const KEY = topicRequest.key;
     if (requestData.isApproved) {
       /** Approve request */
       const topic: Topic = await Topic.findOne({
@@ -58,23 +64,42 @@ export class TopicRequestItemService {
       }
       const requestType = topicRequest.dataValues.requestType;
       if (requestType === 'update') {
-        topic.update({ [topicRequest.key]: topicRequest.content });
+        topic.update({ [KEY]: topicRequest.content });
       } else if (requestType === 'add') {
-        topic.update({
-          types: [
-            ...topic.dataValues.types.split(','),
+        if (KEY === 'types') {
+          topic.update({
+            types: [
+              ...topic.dataValues.types.split(','),
+              topicRequest.dataValues.content,
+            ]
+              .filter(Boolean)
+              .join(','),
+          });
+        } else if (KEY === 'medias' || KEY === 'media') {
+          const { description, name, featuredImage } = JSON.parse(
             topicRequest.dataValues.content,
-          ]
-            .filter(Boolean)
-            .join(','),
-        });
+          );
+          if (description && name && featuredImage) {
+            this.mediaRepository.create({
+              topicId: topicRequest.topicId,
+              description,
+              name,
+              featuredImage,
+              creatorId: 1,
+            });
+          } else {
+            return { success: false, message: 'Error: Missing data' };
+          }
+        }
       } else if (requestType === 'remove') {
-        topic.update({
-          types: topic.dataValues.types
-            .split(',')
-            .filter((t) => t !== '' && t !== topicRequest.dataValues.content)
-            .join(','),
-        });
+        if (KEY === 'types') {
+          topic.update({
+            types: topic.dataValues.types
+              .split(',')
+              .filter((t) => t !== '' && t !== topicRequest.dataValues.content)
+              .join(','),
+          });
+        }
       }
       topicRequest.update({ isRejected: false, isApproved: true });
       return { success: true, message: 'Topic request has been approved' };

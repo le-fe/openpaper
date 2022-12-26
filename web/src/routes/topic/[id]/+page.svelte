@@ -13,12 +13,9 @@
 	let medias: IMedia[] = []
 
 	async function fetchMedias() {
-		const res = await getMediaFromTopic({ topicId, limit: 18 })
-		if (isArray(res)) {
-			if (res.types) {
-				res.types = res.types.split(",")
-			}
-			medias = res
+		const { data } = await getMediaFromTopic({ topicId, limit: 18 })
+		if (isArray(data)) {
+			medias = data
 		}
 	}
 

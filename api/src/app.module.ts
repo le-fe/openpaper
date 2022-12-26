@@ -4,6 +4,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 //
+import { AppConfig } from './app-config/app-config.model';
+import { AppConfigModule } from './app-config/app-config.module';
+//
 import { User } from './user/user.model';
 import { UserModule } from './user/user.module';
 
@@ -35,7 +38,7 @@ ConfigModule.forRoot(); // Load ENV file
       username: 'postgres',
       database: process.env.DATABASE_NAME,
       password: process.env.DATABASE_PWD,
-      models: [User, Topic, Media, Type, Country, TopicRequestItem],
+      models: [AppConfig, User, Topic, Media, Type, Country, TopicRequestItem],
       autoLoadModels: true,
       synchronize: true,
       logging: false,
@@ -47,6 +50,7 @@ ConfigModule.forRoot(); // Load ENV file
     CountryModule,
     TopicRequestItemModule,
     FileModule,
+    AppConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
