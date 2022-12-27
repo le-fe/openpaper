@@ -2,11 +2,66 @@
 	import type { IMedia } from "../interfaces/IMedia"
 	import Image from "./core/Image/Image.svelte"
 	import Icon from "./core/Icon/Icon.svelte"
-	import Popper from "./core/Popper/Popper.svelte"
-	import { MenuList, MenuItem } from "./core/Menu"
+	import Dropdown from "./core/Dropdown"
+	import ToastUtil from "./core/Toast"
+	import { openModal, closeAllModals, ConfirmModal } from "./core/Modal"
+	import { createTopicRequestChange, REQUEST_TOPIC_TYPE } from "@/api/topic-request-change"
+	import { createEventDispatcher } from "svelte"
 	import { _ } from "svelte-i18n"
 
+	const dispatch = createEventDispatcher()
 	export let media: IMedia
+	export let topicId
+
+	const moreOptions = [
+		{
+			name: $_("youCanRequestChangeRemoveItem"),
+			value: "instruction",
+			type: "text",
+		},
+		{
+			name: $_("viewDiscussion"),
+			value: "viewDiscussion",
+			icon: "view",
+		},
+		{
+			name: $_("requestUpdate"),
+			value: "requestUpdate",
+		},
+		{
+			name: $_("requestRemove"),
+			value: "requestRemove",
+			onClick: handleRequestRemove,
+		},
+		{
+			name: $_("report"),
+			value: "report",
+		},
+	]
+
+	function handleRequestRemove() {
+		openModal(ConfirmModal, {
+			message: $_("confirmSendRequest"),
+			onConfirm: async () => {
+				const res = await createTopicRequestChange({
+					requestType: REQUEST_TOPIC_TYPE.REMOVE,
+					key: "medias",
+					topicId,
+					requestUserId: 1,
+					content: JSON.stringify(media),
+				})
+				if (res.ok) {
+					ToastUtil.toastSuccess($_("requestHasSubmitted"))
+					dispatch("remove", media)
+					closeAllModals()
+					return res
+				} else {
+					ToastUtil.toastError(res.error || $_("somethingWentWrong"))
+					return { ok: false }
+				}
+			},
+		})
+	}
 </script>
 
 <div class="relative cursor-pointer rounded-xl">
@@ -19,20 +74,11 @@
 				<span class="text-base leading-none font-medium">{media.name}</span>
 			</div>
 			<div class="ml-2">
-				<Popper>
+				<Dropdown options={moreOptions}>
 					<button slot="trigger" class="w-5 h-5 dark:hover:bg-slate-800 rounded-full all-center">
 						<Icon class="dark:fill-white" name="more" />
 					</button>
-					<div class="max-w-sm" slot="content">
-						<div class="text-xs px-2 pt-1">{$_("youCanRequestChangeRemoveItem")}</div>
-						<MenuList class="mt-2">
-							<MenuItem class="font-medium">{$_("viewDiscussion")}</MenuItem>
-							<MenuItem class="font-medium">{$_("requestUpdate")}</MenuItem>
-							<MenuItem class="font-medium">{$_("requestRemove")}</MenuItem>
-							<MenuItem class="font-medium">{$_("report")}</MenuItem>
-						</MenuList>
-					</div>
-				</Popper>
+				</Dropdown>
 			</div>
 		</div>
 	</div>

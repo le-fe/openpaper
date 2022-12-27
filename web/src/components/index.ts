@@ -1,6 +1,7 @@
 import Card from "./core/Card.svelte"
 import Button from "./core/Button.svelte"
 import Drawer from "./core/Drawer/Drawer.svelte"
+import Dropdown from "./core/Dropdown"
 import Tag from "./core/Tag.svelte"
 import Icon from "./core/Icon/Icon.svelte"
 import Input from "./core/Input/Input.svelte"
@@ -16,6 +17,7 @@ export {
 	Button,
 	Card,
 	Drawer,
+	Dropdown,
 	Tag,
 	Icon,
 	Image,

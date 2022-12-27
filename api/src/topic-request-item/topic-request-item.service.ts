@@ -99,6 +99,9 @@ export class TopicRequestItemService {
               .filter((t) => t !== '' && t !== topicRequest.dataValues.content)
               .join(','),
           });
+        } else if (KEY === 'media' || KEY === 'medias') {
+          const { id } = JSON.parse(topicRequest.dataValues.content);
+          this.mediaRepository.destroy({ where: { id } });
         }
       }
       topicRequest.update({ isRejected: false, isApproved: true });

@@ -2,7 +2,7 @@
 	import * as yup from "yup"
 	import { _ } from "svelte-i18n"
 	import { isUrlImage } from "@/utils"
-	import { Button, Form, FormItem, ModalWrapper, Input, Upload, ToastUtil } from "@components"
+	import { Button, Form, FormItem, ModalWrapper, Input, Upload, ToastUtil, closeModal } from "@components"
 	import { createTopicRequestChange, REQUEST_TOPIC_TYPE } from "@/api/topic-request-change"
 
 	export let isOpen: boolean = false
@@ -62,7 +62,7 @@
 			})
 			if (res.ok) {
 				ToastUtil.toastSuccess($_("requestHasSubmitted"))
-				isOpen = false
+				closeModal()
 			} else {
 				ToastUtil.toastError(res.error || $_("somethingWentWrong"))
 			}
@@ -119,7 +119,7 @@
 			</Form>
 		</div>
 		<div slot="bottom" class="flex items-center">
-			<Button class="mr-2">{$_("cancel")}</Button>
+			<Button class="mr-2" on:click={closeModal}>{$_("cancel")}</Button>
 			<Button type="primary" icon="check" on:click={() => formElement.submit()}>{$_("requestItem")}</Button>
 		</div>
 	</ModalWrapper>

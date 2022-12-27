@@ -130,6 +130,10 @@
 			topicId: $topicDetail.id,
 		})
 	}
+
+	function removeMedia(item: IMedia) {
+		medias.splice(medias.indexOf(item), 1)
+	}
 </script>
 
 <Card class="py-4 px-6" type="stroke">
@@ -171,9 +175,9 @@
 	<div class="flex items-center my-4">
 		<div class="flex">
 			{#each $topicDetail.types as type}
-				<a class="inline-flex mr-2 cursor-pointer"
-					><Tag closable={true} on:close-tag={() => handleRemoveTag(type)}>#{type}</Tag></a
-				>
+				<a class="inline-flex mr-2 cursor-pointer">
+					<Tag closable={true} on:close-tag={() => handleRemoveTag(type)}>#{type}</Tag>
+				</a>
 			{/each}
 			{#if isUpdatingTag}
 				<form class="flex items-center" on:submit|preventDefault={requestAddTag}>
@@ -227,7 +231,7 @@
 	<div>
 		<div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) );">
 			{#each medias as media}
-				<TopicMediaItem {media} />
+				<TopicMediaItem topicId={$topicDetail.id} {media} on:remove={() => removeMedia(media)} />
 			{/each}
 			<div
 				class="flex flex-col items-center justify-center cursor-pointer p-4 border dark:border-gray-600 dark:hover:bg-slate-600 transition-colors rounded-xl"
