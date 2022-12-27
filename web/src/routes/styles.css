@@ -56,6 +56,12 @@ button:focus:not(:focus-visible) {
 	outline: none;
 }
 
+.all-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .container {
 	margin-left: auto;
 	margin-right: auto;

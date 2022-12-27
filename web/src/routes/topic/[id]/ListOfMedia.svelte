@@ -110,7 +110,6 @@
 			}
 			const res = await createTopicRequestChange(payload)
 			if (res) {
-				isEdit = false
 				ToastUtil.toastSuccess($_("requestHasSubmitted"))
 			} else {
 				ToastUtil.toastError(res?.toString() || $_("somethingWentWrong"))

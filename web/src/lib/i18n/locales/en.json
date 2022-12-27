@@ -1,6 +1,11 @@
 {
 	"save": "Save",
 	"cancel": "Cancel",
+	"report": "Report",
+	"requestUpdate": "Request update",
+	"requestRemove": "Request remove",
+	"remove": "Remove",
+	"viewDiscussion": "View discussions",
 	"discussions": "Discussions",
 	"updateTopic": "Update topic",
 	"loadMore": "Load more",
@@ -21,5 +26,6 @@
 	"itemFeaturedImage": "Featured Image of Item",
 	"clickToUpload": "Click to upload",
 	"addItemWillCreateAnDiscussion": "If this item has been approved, an discussion will automatically be created",
-	"requestItem": "Request item"
+	"requestItem": "Request item",
+	"youCanRequestChangeRemoveItem": "You can request change, request remove or get discussion for this topic item"
 }
