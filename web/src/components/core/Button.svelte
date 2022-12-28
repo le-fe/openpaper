@@ -3,7 +3,7 @@
 	import Icon from "./Icon/Icon.svelte"
 	import { ClassBuilder } from "./utils"
 
-	const classesDefault = "inline-flex items-center transition-colors"
+	const classesDefault = "inline-flex items-center justify-center transition-colors"
 	const cb = new ClassBuilder("", classesDefault)
 	export let type: string = "default"
 	export let size: string = "default"

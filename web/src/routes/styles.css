@@ -66,6 +66,11 @@ button:focus:not(:focus-visible) {
 	margin-left: auto;
 	margin-right: auto;
 }
+.container-md {
+	max-width: 768px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .modal {
 	position: fixed;

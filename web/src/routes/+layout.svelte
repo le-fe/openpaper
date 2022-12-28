@@ -13,35 +13,40 @@
 	import "./styles.css"
 	import "./tiny-slider.css"
 
+	let isLoaded = false
+
 	onMount(async () => {
 		if (browser) {
 			locale.set(window.navigator.language)
 		}
 		await waitLocale()
+		isLoaded = true
 	})
 </script>
 
 <div class="app">
-	<div class="main-header bg-white dark:bg-gray-800 dark:text-white">
-		<Header />
-	</div>
-	<div class="sidebar bg-white dark:bg-gray-800 dark:text-white">
-		<Sidebar />
-	</div>
+	{#if isLoaded}
+		<div class="main-header bg-white dark:bg-gray-800 dark:text-white">
+			<Header />
+		</div>
+		<div class="sidebar bg-white dark:bg-gray-800 dark:text-white">
+			<Sidebar />
+		</div>
 
-	<main class="app-main bg-white dark:bg-gray-600 dark:text-white">
-		<slot />
-	</main>
-	<SvelteToast
-		options={{
-			theme: {
-				"--toastBarHeight": 0,
-			},
-		}}
-	/>
-	<Modals>
-		<div slot="backdrop" class="backdrop" transition:fade on:click={closeModal} />
-	</Modals>
+		<main class="app-main bg-white dark:bg-gray-600 dark:text-white">
+			<slot />
+		</main>
+		<SvelteToast
+			options={{
+				theme: {
+					"--toastBarHeight": 0,
+				},
+			}}
+		/>
+		<Modals>
+			<div slot="backdrop" class="backdrop" transition:fade on:click={closeModal} />
+		</Modals>
+	{/if}
 	<div class="hidden">
 		<span class="p-2" />
 		<span class="p-3" />

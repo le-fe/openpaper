@@ -11,9 +11,9 @@
 	onMount(() => fetchTrendingTypes())
 
 	async function fetchTrendingTypes() {
-		const res = await getTrendingTypes()
-		if (isArray(res)) {
-			typeList = res
+		const { data } = await getTrendingTypes()
+		if (isArray(data)) {
+			typeList = data
 		}
 	}
 </script>

@@ -65,7 +65,7 @@
 </script>
 
 <div class="relative cursor-pointer rounded-xl">
-	<div class="aspect-[2/3] rounded-lg overflow-hidden">
+	<div class="aspect-[1/1] rounded-lg overflow-hidden">
 		<Image class="w-full h-full object-cover" alt={media.name} src={media.featuredImage} />
 	</div>
 	<div class="mt-2">

@@ -2,10 +2,13 @@
 	"save": "Save",
 	"cancel": "Cancel",
 	"report": "Report",
+	"logIn": "Log in",
+	"signUp": "Sign up",
 	"requestUpdate": "Request update",
 	"requestRemove": "Request remove",
 	"remove": "Remove",
 	"confirm": "Confirm",
+	"select": "Select",
 	"viewDiscussion": "View discussions",
 	"confirmSendRequest": "Are you sure to send this request?",
 	"discussions": "Discussions",
@@ -29,5 +32,8 @@
 	"clickToUpload": "Click to upload",
 	"addItemWillCreateAnDiscussion": "If this item has been approved, an discussion will automatically be created",
 	"requestItem": "Request item",
-	"youCanRequestChangeRemoveItem": "You can request change, request remove or get discussion for this topic item"
+	"youCanRequestChangeRemoveItem": "You can request change, request remove or get discussion for this topic item",
+	"submitNewTopic": "Submit New Topic",
+	"thisTopicIsNotExisted": "This topic is not deleted or not existed!",
+	"tags": "Tags"
 }

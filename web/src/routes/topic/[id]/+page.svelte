@@ -58,5 +58,9 @@
 		</div>
 	</div>
 {:catch error}
-	<h3>Error while loading the data</h3>
+	<div class="min-h-[50vh] all-center">
+		<div class="text-center">
+			{$_("thisTopicIsNotExisted")}
+		</div>
+	</div>
 {/await}

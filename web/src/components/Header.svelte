@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Icon, InputSearch } from "@components"
+	import { Icon, InputSearch, Button } from "."
 	import type { ICountry } from "@/interfaces/ICountry"
 	import { isArray } from "lodash"
 	import { getCountries } from "@/api/country"
+	import { _ } from "svelte-i18n"
 
 	let countries: ICountry[] = []
 	let selectedCountry: ICountry
@@ -14,7 +15,6 @@
 			selectedCountry = res?.[0]
 		}
 	}
-
 	fetchCountries()
 </script>
 
@@ -33,18 +33,17 @@
 
 				<div class="ml-2 flex">
 					{#if selectedCountry}
-						<a class="flex items-center gap-x-2 py-2 px-4 bg-slate-700 hover:bg-slate-600 transition-colors rounded-md mr-2">
+						<div
+							class="flex items-center gap-x-2 py-2 px-4 bg-slate-700 hover:bg-slate-600 transition-colors rounded-md mr-2 cursor-pointer"
+						>
 							<img class="w-6 h-4" src="data:image/png;base64, {selectedCountry.flag}" alt={selectedCountry.name} />
 							<span class="text-sm font-medium">{selectedCountry.name}</span>
-						</a>
+						</div>
 					{/if}
-					<div class="flex cursor-pointer items-center gap-x-1 rounded-md py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-900">
-						<Icon name="add" />
-						<span class="text-sm font-medium">Submit New Topic</span>
-					</div>
-					<div class="ml-2 flex cursor-pointer items-center gap-x-1 rounded-md border py-2 px-4 hover:bg-gray-100">
-						<span class="text-sm font-medium">Sign in</span>
-					</div>
+					<a href="/topic/new/">
+						<Button icon="add" type="primary">{$_("submitNewTopic")}</Button>
+					</a>
+					<Button class="capitalize ml-4">{$_("logIn")}</Button>
 				</div>
 			</div>
 

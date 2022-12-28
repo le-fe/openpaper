@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte"
 	import Icon from "./Icon/Icon.svelte"
+	import { ClassBuilder } from "./utils"
 
 	const dispatch = createEventDispatcher()
 	export let closable: boolean = false
@@ -19,20 +20,19 @@
 		sm: "py-0.5 px-1.5",
 	}
 
-	$: wrapperClass = generateClassName()
-
-	function generateClassName() {
-		let cls = [
-			mappingTypeClass[type]?.wrapper || mappingTypeClass.default.wrapper,
-			mappingSizeClass[size] || mappingSizeClass.default.default,
-		]
-		return cls.join(" ")
-	}
+	const classesDefault = "flex items-center justify-center rounded"
+	const cb = new ClassBuilder("", classesDefault)
+	$: className = cb
+		.flush()
+		.add(mappingTypeClass[type]?.wrapper || mappingTypeClass.default, true)
+		.add($$props.class, true)
+		.add(mappingSizeClass[size] || mappingSizeClass.default, true)
+		.get()
 
 	function handleCloseTag() {}
 </script>
 
-<span class="flex items-center justify-center rounded {wrapperClass}">
+<span class={className}>
 	<span class="text-xs font-semibold inline-block uppercase last:mr-0 mr-1">
 		<slot />
 	</span>
