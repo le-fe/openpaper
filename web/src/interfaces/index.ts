@@ -4,5 +4,6 @@ import type { ITopic } from "./ITopic"
 import type { IType } from "./IType"
 import type { ICountry } from "./ICountry"
 import type { IRequestTopicItem } from "./IRequestTopicItem"
+import type { IPagination } from "./IPagination"
 
-export { IUser, IMedia, ITopic, IType, ICountry, IRequestTopicItem }
+export { IUser, IMedia, ITopic, IType, ICountry, IRequestTopicItem, IPagination }

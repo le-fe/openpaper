@@ -14,8 +14,8 @@ export const dictionary = {
 	"/": [2],
 	"/about": [3],
 	"/topic": [4],
-	"/topic/new": [5],
-	"/topic/[id]": [6]
+	"/topic/new": [6],
+	"/topic/[id]": [5]
 };
 
 export const hooks = {

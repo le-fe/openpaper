@@ -9,6 +9,7 @@
 	"remove": "Remove",
 	"confirm": "Confirm",
 	"select": "Select",
+	"createDiscussion": "Create discussion for this",
 	"viewDiscussion": "View discussions",
 	"confirmSendRequest": "Are you sure to send this request?",
 	"discussions": "Discussions",

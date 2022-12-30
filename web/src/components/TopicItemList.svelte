@@ -2,18 +2,26 @@
 	import dayjs from "dayjs"
 	import relativeTime from "dayjs/plugin/relativeTime"
 	import { Card, Button, Icon, Input, Tag, ToastUtil, openModal } from "@components"
-	import TopicMediaItem from "@/components/TopicMediaItem.svelte"
-	import type { IMedia } from "@/interfaces"
+	import TopicItemListSingle from "@/components/TopicItemListSingle.svelte"
+	import type { IMedia, IPagination } from "@/interfaces"
 	import { _ } from "svelte-i18n"
-	import { topicDetail } from "./store"
+	import { topicDetail } from "../routes/topic/[id]/store"
 	import { authUser } from "@/stores"
 	import { createTopicRequestChange, REQUEST_TOPIC_TYPE } from "@/api/topic-request-change"
+	import { getMediaFromTopic } from "@/api/topic"
 	dayjs.extend(relativeTime)
 
 	const titleClass = "text-3xl !text-primary !dark:text-primary-dark font-medium"
 	const descriptionClass = ""
 
-	export let medias: IMedia[]
+	export let topicId: number
+	let medias: IMedia[]
+	let pagination: IPagination = {
+		limit: 18,
+		currentPage: 1,
+		total: null,
+		nextPage: null,
+	}
 
 	// Edit status properties
 	let isEditName: boolean = false
@@ -28,6 +36,15 @@
 	let requestNewTagValue: string = ""
 
 	let isUpdatingTag: boolean = false
+
+	async function fetchMedias() {
+		const { data } = await getMediaFromTopic({ topicId, limit: pagination.limit, page: pagination.currentPage })
+		const { rows, currentPage, total, nextPage } = data
+		medias = rows
+		pagination.total = total
+		pagination.currentPage = currentPage
+		pagination.nextPage = nextPage
+	}
 
 	const handleClickRequestName = () => {
 		requestNameValue = $topicDetail.name
@@ -120,13 +137,13 @@
 	}
 
 	function viewRequestUpdateTopic() {
-		openModal(() => import("./TopicRequestUpdateModal.svelte"), {
+		openModal(() => import("@/components/TopicRequestUpdateModal.svelte"), {
 			topicId: $topicDetail.id,
 		})
 	}
 
 	function openRequestMedia() {
-		openModal(() => import("./MediaRequestUpdateModal.svelte"), {
+		openModal(() => import("@/components/TopicItemRequestUpdateModal.svelte"), {
 			topicId: $topicDetail.id,
 		})
 	}
@@ -229,20 +246,28 @@
 		{/if}
 	</div>
 	<div>
-		<div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) );">
-			{#each medias as media}
-				<TopicMediaItem topicId={$topicDetail.id} {media} on:remove={() => removeMedia(media)} />
-			{/each}
-			<div
-				class="flex flex-col items-center justify-center cursor-pointer p-4 border dark:border-gray-600 dark:hover:bg-slate-600 transition-colors rounded-xl"
-				on:click={openRequestMedia}
-			>
-				<Icon class="dark:fill-white" name="add" />
-				<span class="mt-2">Add new</span>
+		{#await fetchMedias()}
+			<div class="w-full flex items-center justify-center py-24">
+				<Icon class="animate-spin" width="40px" height="40px" name="loading" />
 			</div>
-		</div>
+		{:then}
+			<div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) );">
+				{#each medias as media}
+					<TopicItemListSingle topicId={$topicDetail.id} {media} on:remove={() => removeMedia(media)} />
+				{/each}
+				<div
+					class="flex flex-col items-center justify-center cursor-pointer p-4 border dark:border-gray-600 dark:hover:bg-slate-600 transition-colors rounded-xl"
+					on:click={openRequestMedia}
+				>
+					<Icon class="dark:fill-white" name="add" />
+					<span class="mt-2">Add new</span>
+				</div>
+			</div>
+		{/await}
 		<div class="mt-4 text-center">
-			<Button>{$_("loadMore")}</Button>
+			{#if pagination.nextPage > 0}
+				<Button>{$_("loadMore")}</Button>
+			{/if}
 		</div>
 	</div>
 </Card>

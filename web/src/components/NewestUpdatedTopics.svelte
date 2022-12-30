@@ -3,7 +3,7 @@
 	import { isArray } from "lodash"
 	import { getTopicList } from "../api/topic"
 	import type { ITopic } from "../interfaces/ITopic"
-	import TopicItem from "../components/TopicItem.svelte"
+	import Topic from "../components/Topic.svelte"
 	/**
 	 * @type {ITopic[]}
 	 */
@@ -26,7 +26,7 @@
 	<h2 class="mb-2 font-bold text-lg">Newest updated Topics</h2>
 	<div class="grid grid-cols-1 md:grid-cols-3 gap-4" bind:this={gridElement}>
 		{#each topicList as topic}
-			<TopicItem data={topic} />
+			<Topic data={topic} />
 		{/each}
 	</div>
 </section>

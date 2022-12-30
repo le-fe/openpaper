@@ -20,9 +20,9 @@
 			type: "text",
 		},
 		{
-			name: $_("viewDiscussion"),
-			value: "viewDiscussion",
-			icon: "view",
+			name: $_("createDiscussion"),
+			value: "createDiscussion",
+			icon: "add",
 		},
 		{
 			name: $_("requestUpdate"),

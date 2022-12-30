@@ -1,6 +1,6 @@
 <script>
-	import HomeTrendingToday from "./HomeTrendingToday.svelte"
-	import NewestUpdatedTopics from "./NewestUpdatedTopics.svelte"
+	import HomeTrendingToday from "@/components/HomeTrendingToday.svelte"
+	import NewestUpdatedTopics from "@/components/NewestUpdatedTopics.svelte"
 	// import welcome_fallback from '$lib/images/svelte-welcome.png';
 </script>
 

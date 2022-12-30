@@ -1,31 +1,11 @@
 <script lang="ts">
-	import { onMount } from "svelte"
-	import type { IMedia } from "@/interfaces"
-	import { isArray } from "lodash"
-	import { getMediaFromTopic } from "@/api/topic"
 	import { page } from "$app/stores"
 	import { _ } from "svelte-i18n"
-	import ListOfMedia from "./ListOfMedia.svelte"
 	import { topicDetail, fetchTopicDetail } from "./store"
 	import { Icon } from "@components"
+	import ListOfMedia from "@/components/TopicItemList.svelte"
 
-	const topicId = $page.params.id
-	let medias: IMedia[] = []
-
-	async function fetchMedias() {
-		const { data } = await getMediaFromTopic({ topicId, limit: 18 })
-		if (isArray(data)) {
-			medias = data
-		}
-	}
-
-	async function fetchDiscussions() {
-		return []
-	}
-
-	onMount(() => {
-		fetchMedias()
-	})
+	const topicId = parseInt($page.params.id)
 </script>
 
 <svelte:head>
@@ -40,19 +20,11 @@
 {:then}
 	<div class="py-6">
 		<div class="container">
-			<ListOfMedia {medias} />
+			<ListOfMedia {topicId} />
 			<div class="p-4 mt-8">
 				<div class="mb-2">
 					<h1 class="text-xl font-medium">{$_("discussions")}</h1>
-					{#await fetchDiscussions() then items}
-						{#if !items.length}
-							<span class="text-sm">{$_("noDiscussionOnTopicNow")}</span>
-						{:else}
-							{JSON.stringify(items)}
-						{/if}
-					{:catch error}
-						<h3>Error while loading the data</h3>
-					{/await}
+					Discussions
 				</div>
 			</div>
 		</div>
