@@ -3,9 +3,8 @@
 	import relativeTime from "dayjs/plugin/relativeTime"
 	import { Card, Button, Icon, Input, Tag, ToastUtil, openModal } from "@components"
 	import TopicItemListSingle from "@/components/TopicItemListSingle.svelte"
-	import type { IMedia, IPagination } from "@/interfaces"
+	import type { IMedia, IPagination, ITopic } from "@/interfaces"
 	import { _ } from "svelte-i18n"
-	import { topicDetail } from "../routes/topic/[id]/store"
 	import { authUser } from "@/stores"
 	import { createTopicRequestChange, REQUEST_TOPIC_TYPE } from "@/api/topic-request-change"
 	import { getMediaFromTopic } from "@/api/topic"
@@ -14,7 +13,7 @@
 	const titleClass = "text-3xl !text-primary !dark:text-primary-dark font-medium"
 	const descriptionClass = ""
 
-	export let topicId: number
+	export let topicDetail: ITopic
 	let medias: IMedia[]
 	let pagination: IPagination = {
 		limit: 18,
@@ -38,7 +37,7 @@
 	let isUpdatingTag: boolean = false
 
 	async function fetchMedias() {
-		const { data } = await getMediaFromTopic({ topicId, limit: pagination.limit, page: pagination.currentPage })
+		const { data } = await getMediaFromTopic({ topicId: topicDetail.id, limit: pagination.limit, page: pagination.currentPage })
 		const { rows, currentPage, total, nextPage } = data
 		medias = rows
 		pagination.total = total
@@ -47,7 +46,7 @@
 	}
 
 	const handleClickRequestName = () => {
-		requestNameValue = $topicDetail.name
+		requestNameValue = topicDetail.name
 		isEditName = true
 	}
 
@@ -63,7 +62,7 @@
 		await requestChangeTopic({
 			key: "types",
 			content: requestNewTagValue,
-			oldContent: $topicDetail.types.join(","),
+			oldContent: topicDetail.types.join(","),
 			requestType: REQUEST_TOPIC_TYPE.ADD,
 		})
 		loadingRequestTag = false
@@ -74,13 +73,13 @@
 		await requestChangeTopic({
 			key: "types",
 			content: type,
-			oldContent: $topicDetail.types.join(","),
+			oldContent: topicDetail.types.join(","),
 			requestType: REQUEST_TOPIC_TYPE.REMOVE,
 		})
 	}
 
 	const handleClickRequestDesc = () => {
-		requestDescValue = $topicDetail.description
+		requestDescValue = topicDetail.description
 		isEditDesc = true
 	}
 
@@ -119,11 +118,11 @@
 			})
 			let payload = {
 				requestType,
-				topicId: $topicDetail.id,
+				topicId: topicDetail.id,
 				requestUserId: 1,
 				key,
 				content,
-				oldContent: oldContent || $topicDetail[key],
+				oldContent: oldContent || topicDetail[key],
 			}
 			const res = await createTopicRequestChange(payload)
 			if (res) {
@@ -137,14 +136,14 @@
 	}
 
 	function viewRequestUpdateTopic() {
-		openModal(() => import("@/components/TopicRequestUpdateModal.svelte"), {
-			topicId: $topicDetail.id,
+		openModal(() => import("./TopicRequestUpdateModal.svelte"), {
+			topicId: topicDetail.id,
 		})
 	}
 
 	function openRequestMedia() {
-		openModal(() => import("@/components/TopicItemRequestUpdateModal.svelte"), {
-			topicId: $topicDetail.id,
+		openModal(() => import("./TopicItemRequestUpdateModal.svelte"), {
+			topicId: topicDetail.id,
 		})
 	}
 
@@ -170,14 +169,14 @@
 						class="ml-4"
 						icon="check"
 						loading={loadingRequestName}
-						disabled={requestNameValue === $topicDetail.name}
+						disabled={requestNameValue === topicDetail.name}
 						on:click={requestNameChange}
 					/>
 					<Button class="ml-2" icon="close" loading={loadingRequestName} on:click={() => (isEditName = false)} />
 				</div>
 			{:else}
 				<div class="flex items-center">
-					<h1 class={titleClass}>{$topicDetail.name}</h1>
+					<h1 class={titleClass}>{topicDetail.name}</h1>
 					<Button class="ml-4" size="sm" icon="edit" on:click={handleClickRequestName} />
 				</div>
 			{/if}
@@ -191,7 +190,7 @@
 	</div>
 	<div class="flex items-center my-4">
 		<div class="flex">
-			{#each $topicDetail.types as type}
+			{#each topicDetail.types as type}
 				<a class="inline-flex mr-2 cursor-pointer">
 					<Tag closable={true} on:close-tag={() => handleRemoveTag(type)}>#{type}</Tag>
 				</a>
@@ -217,7 +216,7 @@
 		</div>
 		<span class="ml-4 flex items-center">
 			<Icon class="dark:fill-white" name="clock" />
-			<span class="text-sm ml-1">Last updated at: {dayjs($topicDetail.updatedAt).fromNow()}</span>
+			<span class="text-sm ml-1">Last updated at: {dayjs(topicDetail.updatedAt).fromNow()}</span>
 		</span>
 	</div>
 	<div class="mt-2 mb-6">
@@ -239,7 +238,7 @@
 		{:else}
 			<div class="flex items-center">
 				<p>
-					{$topicDetail.description}
+					{topicDetail.description}
 				</p>
 				<Button class="ml-4" size="sm" icon="edit" on:click={handleClickRequestDesc} />
 			</div>
@@ -253,7 +252,7 @@
 		{:then}
 			<div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) );">
 				{#each medias as media}
-					<TopicItemListSingle topicId={$topicDetail.id} {media} on:remove={() => removeMedia(media)} />
+					<TopicItemListSingle topicId={topicDetail.id} {media} on:remove={() => removeMedia(media)} />
 				{/each}
 				<div
 					class="flex flex-col items-center justify-center cursor-pointer p-4 border dark:border-gray-600 dark:hover:bg-slate-600 transition-colors rounded-xl"

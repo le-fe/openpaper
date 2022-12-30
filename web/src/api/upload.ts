@@ -1,4 +1,4 @@
-import Api from "./index"
+import Api from "./service"
 
 export const uploadFile = async ({ file }: { file: File }) => {
 	try {

@@ -1,4 +1,4 @@
-import Api from "./index"
+import Api from "./service"
 import type { IRequestTopicItem } from "../interfaces/IRequestTopicItem"
 
 export const REQUEST_TOPIC_TYPE = {

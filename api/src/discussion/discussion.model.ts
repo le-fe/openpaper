@@ -9,25 +9,25 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
-import { Media } from '../media/media.model';
-import { TopicRequestItem } from '../topic-request-item/topic-request-item.model';
-import { Discussion } from '../discussion/discussion.model';
+import { Topic } from '../topic/topic.model';
+import { Message } from '../message/message.model';
 
 @Table({
-  tableName: 'Topics',
+  tableName: 'Discussions',
 })
-export class Topic extends Model<Topic> {
+export class Discussion extends Model<Discussion> {
   @Column
-  name: string;
-
-  @Column
-  types: string;
+  title: string;
 
   @Column
   description: string;
 
   @Column
   featuredImage: string;
+
+  @ForeignKey(() => Topic)
+  @Column({ field: 'topicId' })
+  topicId: number;
 
   @Column({ defaultValue: true })
   isPrivate: boolean;
@@ -48,12 +48,6 @@ export class Topic extends Model<Topic> {
   @BelongsTo(() => User)
   user: User;
 
-  @HasMany(() => Media)
-  medias: Media[];
-
-  @HasMany(() => TopicRequestItem)
-  requestChanges: TopicRequestItem[];
-
-  @HasMany(() => Discussion)
-  discussions: Discussion[];
+  @HasMany(() => Message)
+  comments: Message[];
 }

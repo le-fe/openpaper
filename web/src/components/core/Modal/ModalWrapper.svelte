@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy, onMount } from "svelte"
 	import Icon from "../Icon/Icon.svelte"
 	import { closeModal } from "./store"
 
@@ -11,6 +12,14 @@
 		default: "md:w-[50vw]",
 		"full-screen": "w-screen h-screen",
 	}
+
+	onMount(() => {
+		document.body.style.overflow = "hidden"
+	})
+
+	onDestroy(() => {
+		document.body.style.overflow = null
+	})
 
 	$: classList = generateClass()
 	function generateClass() {

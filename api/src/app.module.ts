@@ -26,6 +26,12 @@ import { TopicRequestItem } from './topic-request-item/topic-request-item.model'
 import { TopicRequestItemModule } from './topic-request-item/topic-request-item.module';
 //
 import { FileModule } from './file/file.module';
+//
+import { Discussion } from './discussion/discussion.model';
+import { DiscussionModule } from './discussion/discussion.module';
+//
+import { Message } from './message/message.model';
+import { MessageModule } from './message/message.module';
 
 ConfigModule.forRoot(); // Load ENV file
 
@@ -38,7 +44,17 @@ ConfigModule.forRoot(); // Load ENV file
       username: 'postgres',
       database: process.env.DATABASE_NAME,
       password: process.env.DATABASE_PWD,
-      models: [AppConfig, User, Topic, Media, Type, Country, TopicRequestItem],
+      models: [
+        AppConfig,
+        User,
+        Topic,
+        Media,
+        Type,
+        Country,
+        TopicRequestItem,
+        Discussion,
+        Message,
+      ],
       autoLoadModels: true,
       synchronize: true,
       logging: false,
@@ -51,6 +67,8 @@ ConfigModule.forRoot(); // Load ENV file
     TopicRequestItemModule,
     FileModule,
     AppConfigModule,
+    DiscussionModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from "$app/stores"
 	import { _ } from "svelte-i18n"
-	import { topicDetail, fetchTopicDetail } from "./store"
-	import { Icon } from "@components"
-	import ListOfMedia from "@/components/TopicItemList.svelte"
+	import { topicDetail, fetchTopicDetail } from "@/stores/topic-detail"
+	import { Button, Icon } from "@components"
+	import TopicItemList from "@/components/TopicItemList.svelte"
+	import DiscussionList from "@/components/DiscussionList.svelte"
 
 	const topicId = parseInt($page.params.id)
 </script>
@@ -20,12 +21,9 @@
 {:then}
 	<div class="py-6">
 		<div class="container">
-			<ListOfMedia {topicId} />
-			<div class="p-4 mt-8">
-				<div class="mb-2">
-					<h1 class="text-xl font-medium">{$_("discussions")}</h1>
-					Discussions
-				</div>
+			<TopicItemList topicDetail={$topicDetail} />
+			<div class="mt-8">
+				<DiscussionList topic={$topicDetail} />
 			</div>
 		</div>
 	</div>

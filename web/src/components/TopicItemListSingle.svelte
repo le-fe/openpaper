@@ -11,7 +11,7 @@
 
 	const dispatch = createEventDispatcher()
 	export let media: IMedia
-	export let topicId
+	export let topicId: number
 
 	const moreOptions = [
 		{
@@ -23,20 +23,17 @@
 			name: $_("createDiscussion"),
 			value: "createDiscussion",
 			icon: "add",
-		},
-		{
-			name: $_("requestUpdate"),
-			value: "requestUpdate",
+			onClick: handleCreateDiscussion,
 		},
 		{
 			name: $_("requestRemove"),
 			value: "requestRemove",
 			onClick: handleRequestRemove,
 		},
-		{
-			name: $_("report"),
-			value: "report",
-		},
+		//{
+		//	name: $_("report"),
+		//	value: "report",
+		//},
 	]
 
 	function handleRequestRemove() {
@@ -60,6 +57,14 @@
 					return { ok: false }
 				}
 			},
+		})
+	}
+
+	function handleCreateDiscussion() {
+		openModal(() => import("./ModalDiscussionNew.svelte"), {
+			topicId,
+			title: media.name,
+			description: media.description,
 		})
 	}
 </script>

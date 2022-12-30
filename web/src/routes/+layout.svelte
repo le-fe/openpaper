@@ -1,6 +1,6 @@
 <script>
-	import Header from "../components/Header.svelte"
-	import Sidebar from "../components/Sidebar.svelte"
+	import Header from "../components/AppHeader.svelte"
+	import Sidebar from "../components/AppSidebar.svelte"
 	import { browser } from "$app/environment"
 	import "$lib/i18n"
 	import { locale, waitLocale } from "svelte-i18n"

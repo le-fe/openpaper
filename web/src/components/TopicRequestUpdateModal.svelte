@@ -4,7 +4,7 @@
 	import { getTopicRequestChanges, confirmTopicRequestChange } from "@/api/topic-request-change"
 	import { formatDateTime } from "@/utils"
 	import type { IRequestTopicItem } from "@/interfaces"
-	import { fetchTopicDetail } from "./store"
+	import { fetchTopicDetail } from "@/stores/topic-detail"
 
 	export let isOpen: boolean = false
 	export let topicId: string = ""

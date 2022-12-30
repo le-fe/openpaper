@@ -9,7 +9,11 @@
 	"remove": "Remove",
 	"confirm": "Confirm",
 	"select": "Select",
+	"title": "Title",
+	"description": "Description",
 	"createDiscussion": "Create discussion for this",
+	"submitDiscussion": "Submit new discussion",
+	"newDiscussion": "New discussion",
 	"viewDiscussion": "View discussions",
 	"confirmSendRequest": "Are you sure to send this request?",
 	"discussions": "Discussions",
@@ -36,5 +40,7 @@
 	"youCanRequestChangeRemoveItem": "You can request change, request remove or get discussion for this topic item",
 	"submitNewTopic": "Submit New Topic",
 	"thisTopicIsNotExisted": "This topic is not deleted or not existed!",
-	"tags": "Tags"
+	"tags": "Tags",
+	"createNewDiscussion": "Create new Discussion",
+	"createNewDiscussionForUserToJoin": "Create new Discussion for users to join and discuss"
 }
