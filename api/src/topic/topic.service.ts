@@ -10,7 +10,7 @@ export class TopicService {
   ) {}
   private readonly topics: ITopic[] = [];
 
-  async findAll(queries: object): Promise<ITopic[]> {
+  async list(queries: object): Promise<ITopic[]> {
     return await this.topicRepository.findAll<Topic>({ ...queries });
   }
 

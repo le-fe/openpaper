@@ -1,9 +1,9 @@
 import { Message } from './message.model';
-import { DISCUSSION_COMMENT_REPOSITORY } from '../database/constants';
+import { MESSAGE_REPOSITORY } from '../database/constants';
 
 export const topicsProviders = [
   {
-    provide: DISCUSSION_COMMENT_REPOSITORY,
+    provide: MESSAGE_REPOSITORY,
     useValue: Message,
   },
 ];

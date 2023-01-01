@@ -10,7 +10,7 @@
 	import { getMediaFromTopic } from "@/api/topic"
 	dayjs.extend(relativeTime)
 
-	const titleClass = "text-3xl !text-primary !dark:text-primary-dark font-medium"
+	const titleClass = "text-2xl !text-primary !dark:text-primary-dark font-medium"
 	const descriptionClass = ""
 
 	export let topicDetail: ITopic
@@ -152,9 +152,9 @@
 	}
 </script>
 
-<Card class="py-4 px-6" type="stroke">
-	<div class="mb-2 flex items-center justify-between">
-		<div class="flex-1 overflow-hidden pr-12">
+<Card class="h-[80vh] overflow-y-auto" type="stroke">
+	<div class="mb-2 py-4 px-6 sticky top-0 dark:bg-gray-700 z-10">
+		<div class="">
 			{#if isEditName}
 				<div class="w-full flex items-center">
 					<Input
@@ -177,21 +177,21 @@
 			{:else}
 				<div class="flex items-center">
 					<h1 class={titleClass}>{topicDetail.name}</h1>
-					<Button class="ml-4" size="sm" icon="edit" on:click={handleClickRequestName} />
 				</div>
 			{/if}
 		</div>
-		<div class="flex items-center">
+		<div class="flex items-center mt-2">
+			<Button class="" icon="edit" on:click={handleClickRequestName} />
 			{#if $authUser.permission === "ADMIN"}
-				<Button class="ml-3" icon="view" on:click={viewRequestUpdateTopic}>{$_("viewRequestUpdateTopic")}</Button>
+				<Button class="ml-2" icon="change" on:click={viewRequestUpdateTopic} />
 			{/if}
-			<Button class="ml-3" icon="report" />
+			<Button class="ml-2" icon="report" />
 		</div>
 	</div>
-	<div class="flex items-center my-4">
-		<div class="flex">
+	<div class="my-4 px-4">
+		<div class="flex flex-wrap">
 			{#each topicDetail.types as type}
-				<a class="inline-flex mr-2 cursor-pointer">
+				<a class="inline-flex mr-2 mb-1 cursor-pointer">
 					<Tag closable={true} on:close-tag={() => handleRemoveTag(type)}>#{type}</Tag>
 				</a>
 			{/each}
@@ -214,12 +214,12 @@
 				<Button class="capitalize" size="sm" icon="add" on:click={toggleAddTag} />
 			{/if}
 		</div>
-		<span class="ml-4 flex items-center">
+		<span class="mt-2 flex items-center">
 			<Icon class="dark:fill-white" name="clock" />
 			<span class="text-sm ml-1">Last updated at: {dayjs(topicDetail.updatedAt).fromNow()}</span>
 		</span>
 	</div>
-	<div class="mt-2 mb-6">
+	<div class="mt-2 mb-6 px-4">
 		{#if isEditDesc}
 			<div class="w-full flex items-center">
 				<Input
@@ -250,7 +250,7 @@
 				<Icon class="animate-spin" width="40px" height="40px" name="loading" />
 			</div>
 		{:then}
-			<div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr) );">
+			<div class="grid gap-4 px-4" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr) );">
 				{#each medias as media}
 					<TopicItemListSingle topicId={topicDetail.id} {media} on:remove={() => removeMedia(media)} />
 				{/each}

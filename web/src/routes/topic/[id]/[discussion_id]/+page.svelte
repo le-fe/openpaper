@@ -1,8 +1,29 @@
-<div class="flex flex-col flex-grow">
-	<div class="flex items-center flex-shrink-0 h-16 bg-white border-b border-gray-300 px-4">
-		<div>
-			<h1 class="text-sm font-bold leading-none">#council-of-elrond</h1>
-			<span class="text-xs leading-none">Let's sort this ring thing out hey!?!</span>
+<script lang="ts">
+	import type { IDiscussion } from "@/interfaces"
+	import { page } from "$app/stores"
+	import { DiscussionRepository } from "@/api"
+
+	let discussion: IDiscussion = {}
+	let discussionId: string
+
+	$: discussionId = $page.params.discussion_id
+	page.subscribe((newPage) => {
+		fetchDiscussion(newPage.params.discussion_id)
+	})
+
+	async function fetchDiscussion(discussionId: string) {
+		const res = await DiscussionRepository.get(discussionId)
+		if (res.ok) {
+			discussion = res.data
+		}
+	}
+</script>
+
+<div class="flex flex-col flex-grow h-full overflow-hidden">
+	<div class="flex items-center flex-shrink-0 h-16 bg-white dark:bg-gray-900 px-4">
+		<div class="w-full overflow-hidden">
+			<h1 class="text-sm font-bold">{discussion.title}</h1>
+			<div class="text-xs truncate">{discussion.description}</div>
 		</div>
 	</div>
 	<div class="flex flex-col flex-grow overflow-auto">
@@ -24,9 +45,9 @@
 		</div>
 		<div class="flex flex-col items-center mt-2">
 			<hr class="w-full" />
-			<span class="flex items-center justify-center -mt-3 bg-white h-6 px-3 rounded-full border text-xs font-semibold mx-auto"
-				>Today</span
-			>
+			<span class="flex items-center justify-center -mt-3 h-6 px-3 rounded-full border text-xs font-semibold mx-auto">
+				Today
+			</span>
 		</div>
 		<div class="flex px-4 py-3">
 			<div class="h-10 w-10 rounded flex-shrink-0 bg-gray-300" />
@@ -240,7 +261,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="h-12 bg-white px-4 pb-4">
+	<div class="h-12 dark:bg-gray-900 px-4 pb-4">
 		<div class="flex items-center border-2 border-gray-300 rounded-sm p-1">
 			<button class="flex-shrink flex items-center justify-center h-6 w-6 rounded hover:bg-gray-200">
 				<svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

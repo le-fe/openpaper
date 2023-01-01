@@ -6,16 +6,19 @@ export const nodes = [() => import('./nodes/0'),
 	() => import('./nodes/3'),
 	() => import('./nodes/4'),
 	() => import('./nodes/5'),
-	() => import('./nodes/6')];
+	() => import('./nodes/6'),
+	() => import('./nodes/7'),
+	() => import('./nodes/8')];
 
 export const server_loads = [];
 
 export const dictionary = {
-	"/": [2],
-	"/about": [3],
-	"/topic": [4],
-	"/topic/new": [6],
-	"/topic/[id]": [5]
+	"/": [3],
+	"/about": [4],
+	"/topic": [5],
+	"/topic/new": [8],
+	"/topic/[id]": [6,[2]],
+	"/topic/[id]/[discussion_id]": [7,[2]]
 };
 
 export const hooks = {

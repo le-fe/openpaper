@@ -8,9 +8,14 @@ export type RequiredKeys<T> = { [K in keyof T]-?: {} extends { [P in K]: T[K] } 
 type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Partial<Pick<App.PageData, keyof T & keyof App.PageData>> & Record<string, any>>
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
-type PageParentData = EnsureDefined<import('../../$types.js').LayoutData>;
+type PageParentData = Omit<EnsureDefined<import('../../$types.js').LayoutData>, keyof LayoutData> & EnsureDefined<LayoutData>;
+type LayoutRouteId = RouteId | "/topic/[id]" | "/topic/[id]/[id]"
+type LayoutParams = RouteParams & { id?: string }
+type LayoutParentData = EnsureDefined<import('../../$types.js').LayoutData>;
 
 export type PageServerData = null;
 export type PageLoad<OutputData extends OutputDataShape<PageParentData> = OutputDataShape<PageParentData>> = Kit.Load<RouteParams, PageServerData, PageParentData, OutputData, RouteId>;
 export type PageLoadEvent = Parameters<PageLoad>[0];
 export type PageData = Expand<Omit<PageParentData, keyof PageParentData & EnsureDefined<PageServerData>> & OptionalUnion<EnsureDefined<PageParentData & EnsureDefined<PageServerData>>>>;
+export type LayoutServerData = null;
+export type LayoutData = Expand<LayoutParentData>;

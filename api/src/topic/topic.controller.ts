@@ -9,8 +9,8 @@ export class TopicController {
   constructor(private topicService: TopicService) {}
 
   @Get()
-  async findAll(): Promise<ITopic[]> {
-    return await this.topicService.findAll({
+  async list(): Promise<ITopic[]> {
+    return await this.topicService.list({
       include: [
         { model: User, attributes: ['id', 'firstName', 'lastName', 'avatar'] },
         {
@@ -26,7 +26,7 @@ export class TopicController {
   async findTrendings(@Query() query): Promise<ITopic[]> {
     let queries = {};
     if (query.limit) queries['limit'] = query.limit;
-    return await this.topicService.findAll(queries);
+    return await this.topicService.list(queries);
   }
 
   @Get(':id')

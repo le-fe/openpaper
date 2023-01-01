@@ -15,5 +15,9 @@
 		"src/routes/topic/[id]/+page.ts"
 	],
 	"/topic": [],
-	"/topic/new": []
+	"/topic/new": [],
+	"/topic/[id]/d/[id]": [],
+	"/topic/[id]/[id]": [],
+	"/about/test": [],
+	"/topic/[id]/[discussion_id]": []
 }
