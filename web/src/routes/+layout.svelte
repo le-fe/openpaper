@@ -11,7 +11,8 @@
 
 	import "../app.postcss"
 	import "./styles.css"
-	import "./tiny-slider.css"
+	import "../static/tiny-slider.css"
+	import "../static/editor.scss"
 
 	let isLoaded = false
 

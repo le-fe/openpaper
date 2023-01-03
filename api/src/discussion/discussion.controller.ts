@@ -9,10 +9,14 @@ import {
 } from '@nestjs/common';
 import { IDiscussion } from '../interfaces/IDiscussion';
 import { DiscussionService } from './discussion.service';
+import { MessageService } from '../message/message.service';
 
 @Controller('discussion')
 export class DiscussionController {
-  constructor(private readonly service: DiscussionService) {}
+  constructor(
+    private readonly service: DiscussionService,
+    private readonly messageService: MessageService,
+  ) {}
 
   @Post()
   async create(
@@ -31,5 +35,10 @@ export class DiscussionController {
   @Get(':id')
   async get(@Param('id') id: number): Promise<IDiscussion> {
     return await this.service.get(id);
+  }
+
+  @Get(':id/message/')
+  async listMessage(@Param('id') id: number) {
+    return await this.messageService.list({ discussionId: id });
   }
 }
