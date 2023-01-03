@@ -26,7 +26,7 @@
 		const { data } = await DiscussionRepository.list({ topicId: topic.id })
 		const { rows, currentPage, total, nextPage } = data
 		discussions = rows
-		if (!$page.params.discussion_id) {
+		if (!$page.params.discussion_id && rows?.[0]) {
 			setActiveDiscussion(rows?.[0])
 		}
 		pagination.total = total

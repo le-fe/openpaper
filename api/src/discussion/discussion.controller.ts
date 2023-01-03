@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Query,
+  Ip,
 } from '@nestjs/common';
 import { IDiscussion } from '../interfaces/IDiscussion';
 import { DiscussionService } from './discussion.service';
@@ -40,5 +41,14 @@ export class DiscussionController {
   @Get(':id/message/')
   async listMessage(@Param('id') id: number) {
     return await this.messageService.list({ discussionId: id });
+  }
+
+  @Post(':id/message/')
+  async createMessage(@Param('id') id: number, @Body() payload, @Ip() ip) {
+    return await this.messageService.create(
+      id,
+      ip === '::1' || ip === '::ffff:127.0.0.1' ? '127.0.0.1' : ip,
+      payload,
+    );
   }
 }

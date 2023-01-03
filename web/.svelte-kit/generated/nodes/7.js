@@ -1,1 +1,3 @@
-export { default as component } from "../../../src/routes/topic/[id]/[discussion_id]/+page.svelte";
+import * as shared from "../../../src/routes/topic/[id]/+page.ts";
+export { shared };
+export { default as component } from "../../../src/routes/topic/[id]/+page.svelte";

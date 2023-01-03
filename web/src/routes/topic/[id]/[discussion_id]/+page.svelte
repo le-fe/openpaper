@@ -1,18 +1,24 @@
 <script lang="ts">
+	import { onDestroy } from "svelte"
 	import type { IDiscussion, IMessage } from "@/interfaces"
 	import { page } from "$app/stores"
 	import { DiscussionRepository } from "@/api"
 	import { isArray } from "lodash"
 	import ChatMessageEditor from "@/components/ChatMessageEditor.svelte"
+	import MessageList from "@/components/MessageList.svelte"
 
 	let discussion: IDiscussion = {}
 	let messages: IMessage[] = []
 	let discussionId: string
 
 	$: discussionId = $page.params.discussion_id
-	page.subscribe((newPage) => {
-		fetchDiscussion(newPage.params.discussion_id)
-	})
+	const subcriber = page.subscribe((newPage) => handleChangeDiscussion(newPage.params.discussion_id))
+
+	function handleChangeDiscussion(discussionId: string) {
+		if (!discussionId) return
+		messages = []
+		fetchDiscussion(discussionId)
+	}
 
 	async function fetchMessages() {
 		const { data } = await DiscussionRepository.listMessage(discussionId, {})
@@ -28,6 +34,8 @@
 			fetchMessages()
 		}
 	}
+
+	onDestroy(subcriber)
 </script>
 
 <div class="flex flex-col flex-grow h-full overflow-hidden dark:bg-gray-900">
@@ -38,23 +46,12 @@
 		</div>
 	</div>
 	<div class="flex flex-col flex-grow overflow-auto">
-		{#each messages as message}
-			<div class="flex px-4 py-3">
-				<div class="h-10 w-10 rounded flex-shrink-0 bg-gray-300" />
-				<div class="ml-2">
-					<div class="-mt-1">
-						<span class="text-sm font-semibold">Boromir</span>
-						<span class="ml-1 text-xs text-gray-500">01:26</span>
-					</div>
-					<p class="text-sm">{message.content}</p>
-				</div>
-			</div>
-		{/each}
+		<MessageList {messages} />
 	</div>
 	<div class="dark:bg-gray-900 px-4 py-2">
 		<div class="flex items-center rounded-sm p-1">
 			<div class="flex-1 overflow-hidden pr-2">
-				<ChatMessageEditor />
+				<ChatMessageEditor discussionId={parseInt(discussionId)} />
 			</div>
 		</div>
 	</div>

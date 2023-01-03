@@ -16,9 +16,9 @@ export const dictionary = {
 	"/": [3],
 	"/about": [4],
 	"/topic": [5],
-	"/topic/new": [8],
-	"/topic/[id]": [6,[2]],
-	"/topic/[id]/[discussion_id]": [7,[2]]
+	"/topic/new": [6],
+	"/topic/[id]": [7,[2]],
+	"/topic/[id]/[discussion_id]": [8,[2]]
 };
 
 export const hooks = {

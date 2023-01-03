@@ -27,7 +27,7 @@ module.exports = {
           allowNull: false,
         },
         creatorId: {
-          type: Sequelize.STRING(255),
+          type: Sequelize.STRING(1025),
           allowNull: false,
         },
         createdAt: {

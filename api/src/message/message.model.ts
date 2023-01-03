@@ -21,18 +21,14 @@ export class Message extends Model<Message> {
   @Column({ field: 'discussionId' })
   discussionId: number;
 
-  @ForeignKey(() => User)
-  @Column({ field: 'creatorId' })
-  creatorId: number;
+  @Column
+  creatorId: string;
 
   @CreatedAt
   createdAt: Date;
 
   @UpdatedAt
   updatedAt: Date;
-
-  @BelongsTo(() => User)
-  user: User;
 
   @BelongsTo(() => Discussion)
   discussion: Discussion;

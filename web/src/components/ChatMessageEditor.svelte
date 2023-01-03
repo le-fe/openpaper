@@ -1,11 +1,26 @@
 <script lang="ts">
 	import { Icon } from "@components"
+	import { DiscussionRepository } from "@/api"
+	import ToastUtil from "./core/Toast"
 
+	export let discussionId: number
+
+	async function submitMessage(content: string) {
+		const res = await DiscussionRepository.createMessage(discussionId, {
+			content: JSON.stringify(content).slice(1, -1),
+		})
+		if (res.ok) {
+			console.clear()
+			console.log(res)
+		} else {
+			ToastUtil.toastError("Can't send message at this time")
+		}
+	}
 	function handleKeydown(event) {
 		if (event.keyCode == 13 && !event.shiftKey) {
+			if (!event.target.value) return
 			event.preventDefault()
-			console.clear()
-			console.log(JSON.stringify(event.target.value))
+			submitMessage(event.target.value)
 			return false
 		}
 	}

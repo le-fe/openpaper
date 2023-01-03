@@ -1,7 +1,11 @@
 export interface IMessage {
   content: string;
   discussionId: number;
-  creatorId: number;
+  creatorId: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IMessageQueries {
+  discussionId?: number;
 }

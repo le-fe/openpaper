@@ -4,7 +4,8 @@ const create = async (payload) => await Api.post("/discussion", payload)
 const list = async (queries) => Api.get(`/discussion?${new URLSearchParams(queries || {}).toString()}`, queries)
 const get = async (id: string) => Api.get(`/discussion/${id}`)
 
-const listMessage = async (discussionId: string, queries: object) => Api.get(`/discussion/${discussionId}/message/`)
+const listMessage = async (discussionId: string, queries) =>
+	Api.get(`/discussion/${discussionId}/message/?${new URLSearchParams(queries || {}).toString()}`, queries)
 const createMessage = async (discussionId: string, payload: object) => Api.post(`/discussion/${discussionId}/message/`, payload)
 
 const DiscussionRepository = {
