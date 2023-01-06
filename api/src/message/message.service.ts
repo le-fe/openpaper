@@ -17,7 +17,7 @@ export class MessageService {
   ): Promise<Message> {
     return await this.repository.create<Message>({
       discussionId,
-      creatorId: `${randomName()}[${ipAddress}]`,
+      creatorId: `${randomName()}|${ipAddress}`,
       ...payload,
     });
   }
