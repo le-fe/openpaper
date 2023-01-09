@@ -11,7 +11,7 @@
 	}
 
 	onMount(async () => {
-		if (data.medias?.length > 0 && element) {
+		if (data.items?.length > 0 && element) {
 			const { tns } = await import("tiny-slider")
 			tns({
 				container: element,
@@ -39,7 +39,7 @@
 		</div>
 	</div>
 	<div class="select-none" bind:this={element}>
-		{#each data.medias as media}
+		{#each data.items as media}
 			<div class="px-4 py-2 bg-slate-100 dark:bg-slate-900">
 				<div class="aspect-[2/3]">
 					<img class="w-full h-full object-contain" alt={media.name} src={media.featuredImage} />

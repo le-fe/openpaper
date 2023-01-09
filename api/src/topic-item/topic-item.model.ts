@@ -8,13 +8,12 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { Topic } from '../topic/topic.model';
-import { User } from '../user/user.model';
 
 @Table({
   freezeTableName: true,
-  tableName: 'Medias',
+  tableName: 'TopicItems',
 })
-export class Media extends Model<Media> {
+export class TopicItem extends Model<TopicItem> {
   @Column
   name: string;
 
@@ -43,18 +42,14 @@ export class Media extends Model<Media> {
   @Column({ field: 'topicId' })
   topicId: number;
 
-  @ForeignKey(() => User)
-  @Column({ field: 'creatorId' })
-  creatorId: number;
+  @Column
+  creatorId: string;
 
   @CreatedAt
   createdAt: Date;
 
   @UpdatedAt
   updatedAt: Date;
-
-  @BelongsTo(() => User)
-  user: User;
 
   @BelongsTo(() => Topic)
   topic: Topic;

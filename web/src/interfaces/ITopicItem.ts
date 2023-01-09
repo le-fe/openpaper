@@ -1,4 +1,4 @@
-export interface IMedia {
+export interface ITopicItem {
 	name: string
 	types?: string
 	content?: String
@@ -6,7 +6,7 @@ export interface IMedia {
 	featuredImage?: string
 	isPrivate?: boolean
 	isAdultRestricted?: boolean
-	creatorId?: number
+	creatorId?: string
 	createdAt?: Date
 	updatedAt?: Date
 }

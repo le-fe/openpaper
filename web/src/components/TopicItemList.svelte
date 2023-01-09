@@ -3,18 +3,18 @@
 	import relativeTime from "dayjs/plugin/relativeTime"
 	import { Card, Button, Icon, Input, Tag, ToastUtil, openModal } from "@components"
 	import TopicItemListSingle from "@/components/TopicItemListSingle.svelte"
-	import type { IMedia, IPagination, ITopic } from "@/interfaces"
+	import type { ITopicItem, IPagination, ITopic } from "@/interfaces"
 	import { _ } from "svelte-i18n"
 	import { authUser } from "@/stores"
 	import { createTopicRequestChange, REQUEST_TOPIC_TYPE } from "@/api/topic-request-change"
-	import { getMediaFromTopic } from "@/api/topic"
+	import { listTopicItems } from "@/api/topic"
 	dayjs.extend(relativeTime)
 
 	const titleClass = "text-2xl !text-primary !dark:text-primary-dark font-medium"
 	const descriptionClass = ""
 
 	export let topicDetail: ITopic
-	let medias: IMedia[]
+	let items: ITopicItem[]
 	let pagination: IPagination = {
 		limit: 18,
 		currentPage: 1,
@@ -36,10 +36,10 @@
 
 	let isUpdatingTag: boolean = false
 
-	async function fetchMedias() {
-		const { data } = await getMediaFromTopic({ topicId: topicDetail.id, limit: pagination.limit, page: pagination.currentPage })
+	async function fetchTopicItems() {
+		const { data } = await listTopicItems({ topicId: topicDetail.id, limit: pagination.limit, page: pagination.currentPage })
 		const { rows, currentPage, total, nextPage } = data
-		medias = rows
+		items = rows
 		pagination.total = total
 		pagination.currentPage = currentPage
 		pagination.nextPage = nextPage
@@ -147,8 +147,8 @@
 		})
 	}
 
-	function removeMedia(item: IMedia) {
-		medias.splice(medias.indexOf(item), 1)
+	function removeMedia(item: ITopicItem) {
+		items.splice(items.indexOf(item), 1)
 	}
 </script>
 
@@ -245,13 +245,13 @@
 		{/if}
 	</div>
 	<div>
-		{#await fetchMedias()}
+		{#await fetchTopicItems()}
 			<div class="w-full flex items-center justify-center py-24">
 				<Icon class="animate-spin" width="40px" height="40px" name="loading" />
 			</div>
 		{:then}
 			<div class="grid gap-4 px-4" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr) );">
-				{#each medias as media}
+				{#each items as media}
 					<TopicItemListSingle topicId={topicDetail.id} {media} on:remove={() => removeMedia(media)} />
 				{/each}
 				<div

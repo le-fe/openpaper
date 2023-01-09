@@ -1,9 +1,9 @@
 import { TopicRequestItem } from './topic-request-item.model';
 import {
-  MEDIA_REPOSITORY,
+  TOPIC_ITEM_REPOSITORY,
   TOPIC_REQUEST_ITEM_REPOSITORY,
 } from '../database/constants';
-import { Media } from 'src/media/media.model';
+import { TopicItem } from '../topic-item/topic-item.model';
 
 export const topicRequestItemProviders = [
   {
@@ -11,7 +11,7 @@ export const topicRequestItemProviders = [
     useValue: TopicRequestItem,
   },
   {
-    provide: MEDIA_REPOSITORY,
-    useValue: Media,
+    provide: TOPIC_ITEM_REPOSITORY,
+    useValue: TopicItem,
   },
 ];

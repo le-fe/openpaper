@@ -2,12 +2,12 @@
 	import * as yup from "yup"
 	import { Button, Form, FormItem, ToastUtil, Input } from "@components"
 	import TagSelector from "@/components/TagSelector.svelte"
-	import type { IMedia } from "@/interfaces"
+	import type { ITopicItem } from "@/interfaces"
 	import { _ } from "svelte-i18n"
 
 	let formElement
 
-	let dataForm: IMedia = {
+	let dataForm: ITopicItem = {
 		name: "",
 		description: "",
 		featuredImage: "",

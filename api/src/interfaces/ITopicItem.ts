@@ -1,11 +1,11 @@
-export interface IMedia {
+export interface ITopicItem {
   name: string;
   types: string;
   description: string;
   featuredImage: string;
   isPrivate: boolean;
   isAdultRestricted: boolean;
-  creatorId: number;
+  creatorId: string;
   createdAt: Date;
   updatedAt: Date;
   additionalFields: string;

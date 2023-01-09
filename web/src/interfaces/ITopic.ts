@@ -1,4 +1,4 @@
-import type { IMedia } from "./IMedia"
+import type { ITopicItem } from "./ITopicItem"
 
 export interface ITopic {
 	name: string
@@ -10,5 +10,5 @@ export interface ITopic {
 	creatorId: number
 	createdAt: Date
 	updatedAt: Date
-	medias: IMedia[]
+	items: ITopicItem[]
 }

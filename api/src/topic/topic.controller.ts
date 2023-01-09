@@ -2,7 +2,7 @@ import { Controller, Get, Query, Param } from '@nestjs/common';
 import { TopicService } from './topic.service';
 import { ITopic } from '../interfaces/ITopic';
 import { User } from '../user/user.model';
-import { Media } from '../media/media.model';
+import { TopicItem } from '../topic-item/topic-item.model';
 
 @Controller('topic')
 export class TopicController {
@@ -14,7 +14,7 @@ export class TopicController {
       include: [
         { model: User, attributes: ['id', 'firstName', 'lastName', 'avatar'] },
         {
-          model: Media,
+          model: TopicItem,
           attributes: ['id', 'name', 'types', 'featuredImage'],
           limit: 10,
         },

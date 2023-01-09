@@ -13,8 +13,8 @@ import { UserModule } from './user/user.module';
 import { Topic } from './topic/topic.model';
 import { TopicModule } from './topic/topic.module';
 //
-import { Media } from './media/media.model';
-import { MediaModule } from './media/media.module';
+import { TopicItem } from './topic-item/topic-item.model';
+import { TopicItemModule } from './topic-item/topic-item.module';
 //
 import { Type } from './type/type.model';
 import { TypeModule } from './type/type.module';
@@ -48,7 +48,7 @@ ConfigModule.forRoot(); // Load ENV file
         AppConfig,
         User,
         Topic,
-        Media,
+        TopicItem,
         Type,
         Country,
         TopicRequestItem,
@@ -61,7 +61,7 @@ ConfigModule.forRoot(); // Load ENV file
     }),
     UserModule,
     TopicModule,
-    MediaModule,
+    TopicItemModule,
     TypeModule,
     CountryModule,
     TopicRequestItemModule,

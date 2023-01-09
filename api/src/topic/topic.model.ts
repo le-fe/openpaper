@@ -9,7 +9,7 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
-import { Media } from '../media/media.model';
+import { TopicItem } from '../topic-item/topic-item.model';
 import { TopicRequestItem } from '../topic-request-item/topic-request-item.model';
 import { Discussion } from '../discussion/discussion.model';
 
@@ -48,8 +48,8 @@ export class Topic extends Model<Topic> {
   @BelongsTo(() => User)
   user: User;
 
-  @HasMany(() => Media)
-  medias: Media[];
+  @HasMany(() => TopicItem)
+  items: TopicItem[];
 
   @HasMany(() => TopicRequestItem)
   requestChanges: TopicRequestItem[];

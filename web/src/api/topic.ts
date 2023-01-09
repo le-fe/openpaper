@@ -25,10 +25,5 @@ export const getTopicById = async (id: string) => {
 	}
 }
 
-export const getMediaFromTopic = async ({ topicId, limit }: { topicId: number; limit: number }) => {
-	try {
-		return await Api.get(`/media?topicId=${topicId}&limit=${limit}`)
-	} catch (error) {
-		console.error(error)
-	}
-}
+export const listTopicItems = async ({ topicId, limit }: { topicId: number; limit: number }) =>
+	await Api.get(`/topic-item?topicId=${topicId}&limit=${limit}`)

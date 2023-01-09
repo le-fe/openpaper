@@ -7,7 +7,6 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 import { Topic } from '../topic/topic.model';
-import { Media } from '../media/media.model';
 
 @Table({
   tableName: 'Users',
@@ -42,7 +41,4 @@ export class User extends Model<User> {
 
   @HasMany(() => Topic)
   topics: Topic[];
-
-  @HasMany(() => Topic)
-  medias: Media[];
 }

@@ -55,7 +55,7 @@
 		if (isValid) {
 			const res = await createTopicRequestChange({
 				requestType: REQUEST_TOPIC_TYPE.ADD,
-				key: "medias",
+				key: "topic-item",
 				topicId,
 				requestUserId: 1,
 				content: JSON.stringify(dataForm),

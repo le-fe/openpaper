@@ -10,7 +10,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     return queryInterface
-      .createTable('Medias', {
+      .createTable('TopicItems', {
         id: {
           type: Sequelize.INTEGER,
           allowNull: false,
@@ -54,7 +54,7 @@ module.exports = {
           defaultValue: false,
         },
         creatorId: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING(755),
           allowNull: false,
         },
         topicId: {
@@ -71,25 +71,13 @@ module.exports = {
         },
       })
       .then(async () => {
-        await queryInterface.addConstraint('Medias', {
+        await queryInterface.addConstraint('TopicItems', {
           fields: ['topicId'],
           type: 'foreign key',
-          name: 'medias_topic_id_fkey',
+          name: 'topic_items_topic_id_fkey',
           references: {
             //Required field
             table: 'Topics',
-            field: 'id',
-          },
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
-        });
-        await queryInterface.addConstraint('Users', {
-          fields: ['creatorId'],
-          type: 'foreign key',
-          name: 'medias_creator_id_fkey',
-          references: {
-            //Required field
-            table: 'Users',
             field: 'id',
           },
           onDelete: 'cascade',
@@ -105,6 +93,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    return queryInterface.dropTable('Medias');
+    return queryInterface.dropTable('TopicItems');
   },
 };

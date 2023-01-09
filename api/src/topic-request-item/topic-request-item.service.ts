@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IRequestTopicItem } from '../interfaces/IRequestTopicItem';
 import {
-  MEDIA_REPOSITORY,
+  TOPIC_ITEM_REPOSITORY,
   TOPIC_REQUEST_ITEM_REPOSITORY,
 } from '../database/constants';
 import { TopicRequestItem } from './topic-request-item.model';
 import { Topic } from '../topic/topic.model';
-import { Media } from '../media/media.model';
+import { TopicItem } from '../topic-item/topic-item.model';
+import { randomName } from '../common/utils/random-name';
 
 type IRequestTopicBody = {
   id: number;
@@ -18,7 +19,8 @@ export class TopicRequestItemService {
   constructor(
     @Inject(TOPIC_REQUEST_ITEM_REPOSITORY)
     private readonly topicRequestItemRepository: typeof TopicRequestItem,
-    @Inject(MEDIA_REPOSITORY) private readonly mediaRepository: typeof Media,
+    @Inject(TOPIC_ITEM_REPOSITORY)
+    private readonly topicItemRepository: typeof TopicItem,
   ) {}
 
   async create(requestTopic: IRequestTopicItem): Promise<TopicRequestItem> {
@@ -75,17 +77,17 @@ export class TopicRequestItemService {
               .filter(Boolean)
               .join(','),
           });
-        } else if (KEY === 'medias' || KEY === 'media') {
+        } else if (KEY === 'topic-item') {
           const { description, name, featuredImage } = JSON.parse(
             topicRequest.dataValues.content,
           );
           if (description && name && featuredImage) {
-            this.mediaRepository.create({
+            this.topicItemRepository.create({
               topicId: topicRequest.topicId,
               description,
               name,
               featuredImage,
-              creatorId: 1,
+              creatorId: randomName(),
             });
           } else {
             return { success: false, message: 'Error: Missing data' };
@@ -99,9 +101,9 @@ export class TopicRequestItemService {
               .filter((t) => t !== '' && t !== topicRequest.dataValues.content)
               .join(','),
           });
-        } else if (KEY === 'media' || KEY === 'medias') {
+        } else if (KEY === 'topic-item') {
           const { id } = JSON.parse(topicRequest.dataValues.content);
-          this.mediaRepository.destroy({ where: { id } });
+          this.topicItemRepository.destroy({ where: { id } });
         }
       }
       topicRequest.update({ isRejected: false, isApproved: true });

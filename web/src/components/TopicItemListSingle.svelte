@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IMedia } from "../interfaces/IMedia"
+	import type { ITopicItem } from "../interfaces/ITopicItem"
 	import Image from "./core/Image/Image.svelte"
 	import Icon from "./core/Icon/Icon.svelte"
 	import Dropdown from "./core/Dropdown"
@@ -10,7 +10,7 @@
 	import { _ } from "svelte-i18n"
 
 	const dispatch = createEventDispatcher()
-	export let media: IMedia
+	export let media: ITopicItem
 	export let topicId: number
 
 	const moreOptions = [
@@ -42,7 +42,7 @@
 			onConfirm: async () => {
 				const res = await createTopicRequestChange({
 					requestType: REQUEST_TOPIC_TYPE.REMOVE,
-					key: "medias",
+					key: "topic-item",
 					topicId,
 					requestUserId: 1,
 					content: JSON.stringify(media),
