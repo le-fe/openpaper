@@ -19,6 +19,7 @@
 			"text-black fill-black bg-primary hover:bg-primary-dark font-medium text-sm dark:bg-primary-dark dark:hover:bg-primary",
 		success: "text-white fill-white bg-green hover:bg-green-700 font-medium text-sm dark:bg-green-700 dark:hover:bg-green-600",
 		danger: "text-white fill-white bg-red hover:bg-red-700 font-medium text-sm dark:bg-red-700 dark:hover:bg-red-600",
+		link: "text-white fill-white font-medium text-sm dark:hover:text-gray-200",
 	}
 
 	const paddingHeightSize = {
@@ -51,6 +52,7 @@
 		.add(`p-${paddingHeightSize[size] || paddingHeightSize.default}`, icon && !$$slots.default)
 		.add(mappingSizeClass[size] || mappingSizeClass.default, !(icon && !$$slots.default))
 		.add("opacity-25 pointer-events-none", disabled, "")
+		.remove(mappingSizeClass[size] || mappingSizeClass.default, type === "link")
 		.get()
 </script>
 

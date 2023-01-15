@@ -1,3 +1,4 @@
+import AvatarSelect from "./core/AvatarSelect/AvatarSelect.svelte"
 import Card from "./core/Card.svelte"
 import Button from "./core/Button.svelte"
 import Drawer from "./core/Drawer/Drawer.svelte"
@@ -14,6 +15,7 @@ import { ModalWrapper, Modals, openModal, closeModal } from "./core/Modal"
 import { Form, FormItem } from "./core/Form"
 
 export {
+	AvatarSelect,
 	Button,
 	Card,
 	Drawer,

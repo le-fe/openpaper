@@ -1,4 +1,5 @@
 {
+	"continue": "Continue",
 	"save": "Save",
 	"cancel": "Cancel",
 	"report": "Report",
@@ -11,6 +12,15 @@
 	"select": "Select",
 	"title": "Title",
 	"description": "Description",
+	"loginOrRegister": "Login or Register",
+	"welcomeTo": "Welcome to",
+	"username": "@username",
+	"password": "Password",
+	"register": "Register",
+	"iWantToLogin": "I want to Login",
+	"iWantToRegister": "I want to Register",
+	"forgotPassword": "Forgot your password",
+	"confirmPassword": "Confirm your password",
 	"createDiscussion": "Create discussion for this",
 	"submitDiscussion": "Submit new discussion",
 	"newDiscussion": "New discussion",
@@ -42,5 +52,7 @@
 	"thisTopicIsNotExisted": "This topic is not deleted or not existed!",
 	"tags": "Tags",
 	"createNewDiscussion": "Create new Discussion",
-	"createNewDiscussionForUserToJoin": "Create new Discussion for users to join and discuss"
+	"createNewDiscussionForUserToJoin": "Create new Discussion for users to join and discuss",
+	"selectAnAvatar": "Select an Avatar",
+	"uploadLocalFile": "Upload local file"
 }

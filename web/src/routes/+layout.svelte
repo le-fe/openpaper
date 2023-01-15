@@ -91,7 +91,8 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
-		background: rgba(0, 0, 0, 0.5);
+		background: rgb(0 0 0 / 82%);
+		z-index: 10;
 	}
 
 	@media (min-width: 1200px) {

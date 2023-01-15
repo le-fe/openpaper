@@ -9,6 +9,7 @@
 	export { className as class }
 
 	const mappingModalSizes = {
+		sm: "md:w-[500px]",
 		default: "md:w-[50vw]",
 		"full-screen": "w-screen h-screen",
 	}

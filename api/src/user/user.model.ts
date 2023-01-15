@@ -19,10 +19,7 @@ export class User extends Model<User> {
   password: string;
 
   @Column
-  firstName: string;
-
-  @Column
-  lastName: string;
+  nickname: string;
 
   @Column
   avatar: string;
@@ -30,8 +27,8 @@ export class User extends Model<User> {
   @Column({ defaultValue: true })
   isActive: boolean;
 
-  @Column
-  permission: string;
+  @Column({ defaultValue: false })
+  isSuperAdmin: boolean;
 
   @CreatedAt
   createdAt: Date;

@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 //
+import { AuthModule } from './auth/auth.module';
+//
 import { AppConfig } from './app-config/app-config.model';
 import { AppConfigModule } from './app-config/app-config.module';
 //
@@ -59,6 +61,7 @@ ConfigModule.forRoot(); // Load ENV file
       synchronize: true,
       logging: false,
     }),
+    AuthModule,
     UserModule,
     TopicModule,
     TopicItemModule,

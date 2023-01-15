@@ -2,7 +2,7 @@
 	import { page } from "$app/stores"
 	import { _ } from "svelte-i18n"
 	import { topicDetail, fetchTopicDetail } from "@/stores/topic-detail"
-	import { Icon } from "@components"
+	import { Card, Icon } from "@components"
 	import TopicItemList from "@/components/TopicItemList.svelte"
 	import DiscussionArea from "@/components/DiscussionArea.svelte"
 
@@ -21,7 +21,9 @@
 {:then}
 	<div class="py-2 px-2 flex">
 		<div class="w-1/3 overflow-hidden">
-			<TopicItemList topicDetail={$topicDetail} />
+			<Card class="h-[80vh] overflow-y-auto" type="stroke">
+				<TopicItemList topicDetail={$topicDetail} />
+			</Card>
 		</div>
 		<div class="ml-2 w-2/3 overflow-hidden">
 			<DiscussionArea topic={$topicDetail}>

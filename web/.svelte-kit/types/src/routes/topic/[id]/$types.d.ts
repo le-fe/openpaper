@@ -9,8 +9,8 @@ type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Pa
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 type PageParentData = Omit<EnsureDefined<import('../../$types.js').LayoutData>, keyof LayoutData> & EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/topic/[id]" | "/topic/[id]/[id]"
-type LayoutParams = RouteParams & { id?: string }
+type LayoutRouteId = RouteId | "/topic/[id]" | "/topic/[id]/[discussion_id]"
+type LayoutParams = RouteParams & { id?: string,discussion_id?: string }
 type LayoutParentData = EnsureDefined<import('../../$types.js').LayoutData>;
 
 export type PageServerData = null;

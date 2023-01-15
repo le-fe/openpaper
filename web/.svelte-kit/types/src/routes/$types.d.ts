@@ -9,7 +9,7 @@ type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Pa
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/about" | "/topic" | "/topic/[id]" | "/topic/[id]/[discussion_id]" | "/topic/new" | null
+type LayoutRouteId = RouteId | "/" | "/about" | "/topic" | "/topic/new" | "/topic/[id]" | "/topic/[id]/[discussion_id]" | null
 type LayoutParams = RouteParams & { id?: string,discussion_id?: string }
 type LayoutParentData = EnsureDefined<{}>;
 

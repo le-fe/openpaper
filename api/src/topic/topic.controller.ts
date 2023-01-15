@@ -12,7 +12,7 @@ export class TopicController {
   async list(): Promise<ITopic[]> {
     return await this.topicService.list({
       include: [
-        { model: User, attributes: ['id', 'firstName', 'lastName', 'avatar'] },
+        { model: User, attributes: ['id', 'nickname', 'avatar'] },
         {
           model: TopicItem,
           attributes: ['id', 'name', 'types', 'featuredImage'],

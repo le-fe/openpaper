@@ -18,11 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      firstName: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      lastName: {
+      nickname: {
         type: Sequelize.STRING,
         allowNull: true,
       },
@@ -35,9 +31,10 @@ module.exports = {
         allowNull: false,
         defaultValue: true,
       },
-      permission: {
-        type: Sequelize.STRING,
+      isSuperAdmin: {
+        type: Sequelize.BOOLEAN,
         allowNull: true,
+        defaultValue: false,
       },
       createdAt: {
         type: Sequelize.DATE,

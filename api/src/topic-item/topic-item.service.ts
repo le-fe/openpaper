@@ -27,9 +27,9 @@ export class TopicItemService {
     return paginateResponse(data, page, limit);
   }
 
-  async findByTopicId(topicId: number): Promise<ITopicItem[]> {
-    return await this.repository.findAll<TopicItem>({
-      where: { topicId },
+  async findOne(id: number): Promise<ITopicItem> {
+    return await this.repository.findOne<TopicItem>({
+      where: { id },
     });
   }
 }

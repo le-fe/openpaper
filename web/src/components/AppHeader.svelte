@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Icon, InputSearch, Button } from "."
+	import { openModal } from "@components"
 	import type { ICountry } from "@/interfaces/ICountry"
 	import { isArray } from "lodash"
 	import { getCountries } from "@/api/country"
@@ -16,6 +17,10 @@
 		}
 	}
 	fetchCountries()
+
+	function openLoginModal() {
+		openModal(() => import("./AppLoginModal.svelte"), {})
+	}
 </script>
 
 <header>
@@ -43,7 +48,7 @@
 					<a href="/topic/new/">
 						<Button icon="add" type="primary">{$_("submitNewTopic")}</Button>
 					</a>
-					<Button class="capitalize ml-4">{$_("logIn")}</Button>
+					<Button class="capitalize ml-4" on:click={openLoginModal}>{$_("logIn")}</Button>
 				</div>
 			</div>
 

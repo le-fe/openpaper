@@ -152,7 +152,7 @@
 	}
 </script>
 
-<Card class="h-[80vh] overflow-y-auto" type="stroke">
+<div>
 	<div class="mb-2 py-4 px-6 sticky top-0 dark:bg-gray-700 z-10">
 		<div class="">
 			{#if isEditName}
@@ -269,4 +269,4 @@
 			{/if}
 		</div>
 	</div>
-</Card>
+</div>

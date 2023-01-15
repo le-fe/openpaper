@@ -7,6 +7,7 @@
 		strategy: "fixed",
 	})
 
+	export let popperClass: string = ""
 	const isBrowser = !import.meta.env.SSR
 	export let target: string | HTMLElement = isBrowser ? (document.scrollingElement as HTMLElement) : "body"
 	let triggerEle: HTMLElement, contentEle: HTMLElement
@@ -48,7 +49,7 @@
 	}
 </script>
 
-<div use:popperRef on:click={() => toggleOpen(true)} bind:this={triggerEle}>
+<div use:popperRef on:click={() => toggleOpen(true)} bind:this={triggerEle} class={popperClass}>
 	<slot name="trigger" />
 </div>
 {#if showTooltip}
